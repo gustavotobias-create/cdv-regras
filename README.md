@@ -112,13 +112,3 @@ Não há dependências externas, build steps, frameworks ou servidores. O app in
 
 ---
 
-## Regras cadastradas
-
-Atualmente o repositório conta com **34 regras** distribuídas nos seguintes grupos:
-
-| Grupo | Regras |
-|---|---|
-| Cobertura de Base | CDV-0001 a CDV-0006 |
-| Oneshot: Venda e Renovação | CDV-0007 a CDV-0014 |
-| Indicadores de Performance e KPIs | CDV-0015 a CDV-0026 |
-| Clientes: Tier, Cobertura e Contratos | CDV-0027 a CDV-0034 |
