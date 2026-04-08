@@ -4,7 +4,7 @@
     "title": "Definição de Cliente Coberto",
     "status": "ativa",
     "createdAt": "2026-04-08T12:00:00.000Z",
-    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T23:53:38.433Z",
     "summary": "Cliente coberto é aquele que teve ao menos uma reunião concluída dentro do prazo esperado de atendimento.",
     "definition": "Um cliente é considerado coberto quando seu consultor realizou ao menos uma reunião com ele dentro do prazo esperado. O prazo padrão é de 29 dias. Após 6 meses de contrato, caso o cliente tenha uma frequência de atendimento individual definida, esse valor passa a valer no lugar do padrão. Qualquer tipo de reunião concluída conta para cobertura, seja ela de acompanhamento regular, Proteção Patrimonial ou institucional. Clientes em fase piloto e clientes que cancelaram o serviço na data de referência são excluídos desse controle. O consultor responsável pelo cliente na data de referência é quem responde pelo status de cobertura.",
     "criteria": [
@@ -19,6 +19,30 @@
     "related": [
       "CDV-0002",
       "CDV-0003"
+    ],
+    "tags": [],
+    "history": [
+      {
+        "savedAt": "2026-04-08T12:00:00.000Z",
+        "title": "Definição de Cliente Coberto",
+        "status": "ativa",
+        "summary": "Cliente coberto é aquele que teve ao menos uma reunião concluída dentro do prazo esperado de atendimento.",
+        "definition": "Um cliente é considerado coberto quando seu consultor realizou ao menos uma reunião com ele dentro do prazo esperado. O prazo padrão é de 29 dias. Após 6 meses de contrato, caso o cliente tenha uma frequência de atendimento individual definida, esse valor passa a valer no lugar do padrão. Qualquer tipo de reunião concluída conta para cobertura, seja ela de acompanhamento regular, Proteção Patrimonial ou institucional. Clientes em fase piloto e clientes que cancelaram o serviço na data de referência são excluídos desse controle. O consultor responsável pelo cliente na data de referência é quem responde pelo status de cobertura.",
+        "criteria": [
+          "Ao menos uma reunião concluída dentro do prazo (padrão: 29 dias)",
+          "Após 6 meses de contrato, vale a frequência individual do cliente se definida",
+          "Qualquer tipo de reunião concluída conta para cobertura",
+          "Cliente deve ser ativo e fee-based",
+          "Clientes em fase piloto são excluídos",
+          "Clientes que cancelaram na data de referência são excluídos",
+          "O consultor responsável na data é quem responde pelo status"
+        ],
+        "related": [
+          "CDV-0002",
+          "CDV-0003"
+        ],
+        "tags": []
+      }
     ]
   },
   {
