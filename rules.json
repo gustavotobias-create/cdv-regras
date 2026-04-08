@@ -1,0 +1,582 @@
+[
+  {
+    "id": "CDV-0001",
+    "title": "Definição de Cliente Coberto",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Cliente coberto é aquele que teve ao menos uma reunião concluída dentro do prazo esperado de atendimento.",
+    "definition": "Um cliente é considerado coberto quando seu consultor realizou ao menos uma reunião com ele dentro do prazo esperado. O prazo padrão é de 29 dias. Após 6 meses de contrato, caso o cliente tenha uma frequência de atendimento individual definida, esse valor passa a valer no lugar do padrão. Qualquer tipo de reunião concluída conta para cobertura, seja ela de acompanhamento regular, Proteção Patrimonial ou institucional. Clientes em fase piloto e clientes que cancelaram o serviço na data de referência são excluídos desse controle. O consultor responsável pelo cliente na data de referência é quem responde pelo status de cobertura.",
+    "criteria": [
+      "Ao menos uma reunião concluída dentro do prazo (padrão: 29 dias)",
+      "Após 6 meses de contrato, vale a frequência individual do cliente se definida",
+      "Qualquer tipo de reunião concluída conta para cobertura",
+      "Cliente deve ser ativo e fee-based",
+      "Clientes em fase piloto são excluídos",
+      "Clientes que cancelaram na data de referência são excluídos",
+      "O consultor responsável na data é quem responde pelo status"
+    ],
+    "related": ["CDV-0002", "CDV-0003"]
+  },
+  {
+    "id": "CDV-0002",
+    "title": "Definição de Cliente Descoberto",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Cliente descoberto é aquele que ultrapassou o prazo esperado de atendimento sem ter tido nenhuma reunião concluída.",
+    "definition": "Um cliente entra no status de descoberto quando o número de dias desde sua última reunião concluída supera o prazo de atendimento esperado. O prazo padrão é de 29 dias, podendo variar conforme a frequência individual definida após 6 meses de contrato (ver [[CDV-0001]]). Clientes que nunca tiveram nenhuma reunião registrada também são considerados descobertos. Não existe um prazo máximo formal para um cliente ficar sem reunião. O consultor responsável pelo cliente na data de referência é quem responde pelo cliente descoberto.",
+    "criteria": [
+      "Dias desde a última reunião concluída superam o prazo esperado",
+      "Clientes sem nenhuma reunião histórica também são considerados descobertos",
+      "Não há prazo máximo formal sem reunião",
+      "O consultor responsável na data responde pelo cliente descoberto"
+    ],
+    "related": ["CDV-0001", "CDV-0003", "CDV-0004"]
+  },
+  {
+    "id": "CDV-0003",
+    "title": "Percentual de Cobertura da Base por Consultor",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Indica, diariamente, qual percentual da base de clientes de cada consultor está sendo atendida dentro do prazo esperado.",
+    "definition": "O percentual de cobertura é calculado diariamente para cada consultor, dividindo o número de clientes cobertos (ver [[CDV-0001]]) pelo total de clientes ativos fee-based sob sua responsabilidade. O indicador considera apenas clientes que estão oficialmente na carteira do consultor na data de referência. Reuniões realizadas antes de o cliente entrar na carteira do consultor são consideradas no histórico individual do cliente, mas não afetam o percentual de cobertura do consultor.",
+    "criteria": [
+      "Percentual = clientes cobertos dividido pelo total de clientes ativos fee-based da base",
+      "Calculado diariamente por consultor",
+      "Considera apenas clientes oficialmente na carteira na data de referência",
+      "Reuniões anteriores à entrada do cliente na carteira não afetam o percentual do consultor"
+    ],
+    "related": ["CDV-0001", "CDV-0002"]
+  },
+  {
+    "id": "CDV-0004",
+    "title": "Patrimônio em Risco por Falta de Cobertura",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "AuM em Risco é o somatório do patrimônio total dos clientes descobertos na base do consultor na data de referência.",
+    "definition": "Quando um cliente está descoberto (ver [[CDV-0002]]), o patrimônio que ele mantém sob gestão no CDV é classificado como em risco. O termo não indica risco financeiro dos ativos, mas sim risco de relacionamento, pois a ausência de contato aumenta a probabilidade de cancelamento do serviço. O indicador soma o patrimônio em reais de todos os clientes descobertos da base de cada consultor. Patrimônios em moeda estrangeira são convertidos para reais para fins de cálculo. Ativos sem cotação disponível são informados separadamente e não entram no valor total calculado.",
+    "criteria": [
+      "Considera apenas clientes no status descoberto",
+      "Soma o patrimônio total em reais de cada cliente descoberto",
+      "Patrimônios em moeda estrangeira são convertidos para reais",
+      "Ativos sem cotação disponível são reportados separadamente e não entram no total",
+      "Calculado diariamente por consultor"
+    ],
+    "related": ["CDV-0002"]
+  },
+  {
+    "id": "CDV-0005",
+    "title": "Nomes Mapeados — Indicações Fechadas por Clientes da Base",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Nome mapeado é todo negócio fechado que teve origem em uma indicação feita por um cliente da base do consultor.",
+    "definition": "Cada vez que um cliente da base indica alguém que fecha contrato com o CDV, esse negócio é contabilizado como um nome mapeado para o consultor responsável pelo cliente que indicou. São considerados fechamentos nos serviços Wealth Advisor, Wealth Planner, Wealth Management, Pilot e Investors Club. O valor associado a cada indicação é o faturamento gerado pelo novo cliente que entrou, não o valor do contrato fechado diretamente. O indicador é comparado com a meta de indicações fechadas do consultor no período.",
+    "criteria": [
+      "O negócio fechado deve ter um cliente da base como origem da indicação",
+      "Serviços elegíveis: Wealth Advisor, Wealth Planner, Wealth Management, Pilot e Investors Club",
+      "O crédito vai para o consultor responsável pelo cliente que gerou a indicação",
+      "O valor considerado é o faturamento gerado pelo indicado, não o valor do contrato",
+      "Comparado com a meta de indicações fechadas do período"
+    ],
+    "related": ["CDV-0015"]
+  },
+  {
+    "id": "CDV-0006",
+    "title": "Cobertura de Proteção Patrimonial",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Indica se o cliente já realizou sua reunião de Proteção Patrimonial e se isso ocorreu dentro do ciclo atual de 2026.",
+    "definition": "A Proteção Patrimonial é uma reunião estruturada com foco em revisão patrimonial mais aprofundada, diferente da reunião mensal de acompanhamento regular. São acompanhados dois indicadores: o primeiro indica se o cliente já realizou ao menos uma reunião de PP em qualquer momento do relacionamento com o CDV, podendo ser PP R1, R2 ou R3. O segundo indica se o cliente iniciou o ciclo de PP especificamente em 2026, ou seja, se já realizou a primeira reunião de PP a partir de janeiro deste ano. O percentual de cobertura de PP é calculado como o total de clientes que já fizeram PP dividido pelo total de clientes ativos da base.",
+    "criteria": [
+      "PP histórica: ao menos uma reunião de PP concluída em qualquer data",
+      "PP 2026: reunião PP R1 concluída a partir de 01/01/2026",
+      "Tipos que qualificam: PP R1, PP R2, PP R3 e Proteção Patrimonial",
+      "A reunião precisa estar com status concluída",
+      "Percentual = clientes com PP realizada dividido pelo total de clientes ativos da base"
+    ],
+    "related": ["CDV-0001", "CDV-0003"]
+  },
+  {
+    "id": "CDV-0007",
+    "title": "Definição de Venda Oneshot",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Venda Oneshot é todo contrato fechado no modelo de pagamento único, nos serviços Wealth Planner, Wealth Pilot, Wealth Investors Club, Wealth Advisor e Planejamento Financeiro.",
+    "definition": "O modelo Oneshot é uma modalidade de contratação em que o cliente realiza um pagamento único pelo serviço, diferente do modelo fee-based onde a cobrança é recorrente sobre o patrimônio. Uma venda é contabilizada quando a transação é aprovada ou concluída no sistema. Reembolsos e chargebacks são tratados separadamente e deduzidos do faturamento bruto para compor o faturamento líquido (ver [[CDV-0008]]). O crédito da venda é atribuído ao consultor vendedor registrado na transação.",
+    "criteria": [
+      "Transação com status aprovado ou concluído",
+      "Produto pertencente aos serviços: Wealth Planner, Wealth Pilot, Wealth Investors Club, Wealth Advisor ou Planejamento Financeiro",
+      "Crédito atribuído ao consultor vendedor da transação",
+      "Reembolsos e chargebacks são registrados separadamente"
+    ],
+    "related": ["CDV-0008", "CDV-0009"]
+  },
+  {
+    "id": "CDV-0008",
+    "title": "Faturamento Bruto e Faturamento Líquido Oneshot",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Faturamento Bruto é o total faturado antes de descontar reembolsos. Faturamento Líquido é o valor resultante após a dedução de reembolsos e chargebacks.",
+    "definition": "O Faturamento Bruto Oneshot soma o valor de todas as transações aprovadas ou concluídas nos serviços elegíveis (ver [[CDV-0007]]), sem nenhuma dedução. O Faturamento Líquido é calculado subtraindo do Faturamento Bruto os valores de transações reembolsadas ou que sofreram chargeback. Ambos os indicadores são calculados por consultor e por data de aprovação da transação. Em casos de reembolso, a data considerada é a data do cancelamento quando disponível, ou a data de aprovação original.",
+    "criteria": [
+      "Faturamento Bruto: soma de todas as transações aprovadas ou concluídas",
+      "Faturamento Líquido: Faturamento Bruto subtraído de reembolsos e chargebacks",
+      "Calculado por consultor e por data de aprovação da transação",
+      "Em reembolsos, a data do cancelamento tem prioridade sobre a data de aprovação original"
+    ],
+    "related": ["CDV-0007", "CDV-0009"]
+  },
+  {
+    "id": "CDV-0009",
+    "title": "Ticket Médio Oneshot",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Ticket Médio é o valor médio de cada venda Oneshot realizada, calculado dividindo o Faturamento Bruto pelo número de vendas no período.",
+    "definition": "O Ticket Médio Oneshot é calculado dividindo o total do Faturamento Bruto Oneshot (ver [[CDV-0008]]) pelo total de vendas Oneshot (ver [[CDV-0007]]) realizadas no mesmo período. O indicador permite acompanhar se o valor médio dos contratos está evoluindo ao longo do tempo e comparar o desempenho entre consultores e times. Por ser baseado no Faturamento Bruto, reembolsos e chargebacks não são deduzidos nesse cálculo.",
+    "criteria": [
+      "Ticket Médio = Faturamento Bruto Oneshot dividido pelo número de Vendas Oneshot",
+      "Considera o mesmo período para numerador e denominador",
+      "Baseado no Faturamento Bruto, sem dedução de reembolsos",
+      "Calculado por consultor e por período"
+    ],
+    "related": ["CDV-0007", "CDV-0008"]
+  },
+  {
+    "id": "CDV-0010",
+    "title": "Processo de Renovação de Contrato Oneshot",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "A renovação é o processo de recontratação do serviço Oneshot ao fim do ciclo contratual do cliente. Cada renovação é gerenciada como um negócio no pipeline de Renovação de Contratos.",
+    "definition": "Ao se aproximar o fim do ciclo contratual do cliente Oneshot (ver [[CDV-0007]]), um negócio é aberto no pipeline de Renovação de Contratos para gerenciar o processo de recontratação. O prazo de renovação é calculado com base na data do primeiro pagamento e no número de meses do ciclo contratual, que é de 12 meses por padrão e pode ser maior conforme o contrato firmado. Em renovações subsequentes, o prazo é calculado a partir do vencimento anterior, garantindo continuidade na cadência. O processo de renovação passa pelas etapas: Análise Pendente, Probabilidade de Renovação, Reunião de Renovação Agendada, Contrato Renovado e Renovação Recusada. O consultor responsável pelo cliente é quem conduz o processo de renovação.",
+    "criteria": [
+      "Prazo calculado a partir da data do primeiro pagamento Oneshot mais o ciclo contratual",
+      "Ciclo padrão: 12 meses. Ciclos maiores prevalecem quando definidos em contrato",
+      "Em renovações subsequentes, o prazo parte do vencimento anterior",
+      "Etapas do pipeline: Análise Pendente, Probabilidade de Renovação, Reunião de Renovação Agendada, Contrato Renovado, Renovação Recusada",
+      "Consultor responsável pelo cliente conduz o processo"
+    ],
+    "related": ["CDV-0007", "CDV-0011", "CDV-0012", "CDV-0013"]
+  },
+  {
+    "id": "CDV-0011",
+    "title": "Status de Renovação do Contrato Oneshot",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "O status de renovação indica em que momento do ciclo de recontratação o cliente se encontra: Em andamento, Renovado ou Perdido.",
+    "definition": "Todo cliente Oneshot com negócio aberto no pipeline de renovação (ver [[CDV-0010]]) recebe um dos três status: Em andamento quando o negócio ainda está em aberto, Renovado quando o contrato foi fechado com sucesso, e Perdido quando a renovação foi recusada. Existe ainda um indicador complementar de prazo vencido, que sinaliza clientes cujo prazo de renovação já passou mas o negócio ainda não foi encerrado no sistema. Esse indicador serve como alerta para a gestão agir antes que o cliente fique sem contrato ativo.",
+    "criteria": [
+      "Em andamento: negócio aberto no pipeline de renovação",
+      "Renovado: negócio fechado com sucesso",
+      "Perdido: renovação recusada pelo cliente",
+      "Prazo vencido: prazo de renovação ultrapassado com negócio ainda em aberto",
+      "O status é atualizado conforme o avanço do negócio no pipeline"
+    ],
+    "related": ["CDV-0010", "CDV-0012", "CDV-0014"]
+  },
+  {
+    "id": "CDV-0012",
+    "title": "Probabilidade de Renovação do Contrato Oneshot",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "A probabilidade de renovação é uma avaliação qualitativa do consultor sobre as chances de o cliente renovar o contrato, registrada no negócio de renovação.",
+    "definition": "A probabilidade de renovação é definida pelo consultor responsável pelo cliente e registrada no negócio de renovação (ver [[CDV-0010]]) quando este avança da etapa de Análise Pendente. Os valores possíveis são Baixo, Médio e Alto. Com base no histórico de renovações fechadas nos últimos dois meses, o sistema calcula automaticamente uma taxa de conversão por faixa de probabilidade, permitindo estimar quantas renovações em andamento devem ser concluídas com sucesso.",
+    "criteria": [
+      "Valores possíveis: Baixo, Médio e Alto",
+      "Definida pelo consultor responsável pelo cliente",
+      "Registrada quando o negócio avança da etapa de Análise Pendente",
+      "O sistema calcula a taxa de conversão histórica por faixa de probabilidade com base nos últimos dois meses"
+    ],
+    "related": ["CDV-0010", "CDV-0011"]
+  },
+  {
+    "id": "CDV-0013",
+    "title": "Prazo e Data Combinada de Pagamento na Renovação",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Dias para Renovar indica quantos dias faltam até o vencimento do contrato atual. A Data Combinada de Pagamento é a data acordada com o cliente para efetivação do pagamento da renovação.",
+    "definition": "O indicador de Dias para Renovar é calculado diariamente para todos os contratos com status Em andamento (ver [[CDV-0011]]), subtraindo a data atual do prazo de vencimento do contrato. Quando esse valor chega a zero ou fica negativo com o negócio ainda aberto, o contrato entra no estado de prazo vencido. A Data Combinada de Pagamento é um campo preenchido pelo consultor durante a negociação, indicando quando o cliente se comprometeu a efetuar o pagamento. Esse dado é usado para acompanhar se o pagamento ocorreu dentro do prazo combinado.",
+    "criteria": [
+      "Dias para Renovar = data de vencimento do contrato subtraída da data atual",
+      "Calculado apenas para contratos com status Em andamento",
+      "Contratos com dias negativos e ainda em aberto são sinalizados como prazo vencido",
+      "Data Combinada de Pagamento é preenchida pelo consultor durante a negociação",
+      "Ambos os campos ficam nulos após o encerramento do negócio"
+    ],
+    "related": ["CDV-0010", "CDV-0011"]
+  },
+  {
+    "id": "CDV-0014",
+    "title": "Motivos de Perda na Renovação Oneshot",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "O motivo de perda registra a razão pela qual um cliente não renovou o contrato Oneshot, sendo preenchido pelo consultor ao encerrar o negócio como perdido.",
+    "definition": "Ao marcar uma renovação como perdida (ver [[CDV-0011]]), o consultor deve registrar o motivo de perda para fins de análise e melhoria do processo. Alguns motivos mapeados são: Colaborador Desligado, Optou por Concorrente, Perfil, Sem Fit, Parou de Responder, Sem Interesse, Não é Prioridade, Não Demonstrou Interesse em Conversar.",
+    "criteria": [
+      "Preenchido pelo consultor ao encerrar o negócio como perdido",
+      "Campo obrigatório para negócios com status Perdido",
+      "Os motivos são padronizados e pré-definidos no sistema",
+      "Utilizado para análise de padrões de churn e melhoria do processo de renovação"
+    ],
+    "related": ["CDV-0011"]
+  },
+  {
+    "id": "CDV-0015",
+    "title": "KPI de Indicações Fechadas",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Contabiliza negócios ganhos originados por indicação de clientes da base do consultor, nos funis elegíveis. É o principal motor de crescimento da operação.",
+    "definition": "Uma indicação fechada é contabilizada quando um negócio é ganho nos funis de Análise de Carteira, Prospecção, Corporate ou Wealth Pilot, e possui um consultor de indicação registrado. No modelo fee-based, negócios com patrimônio abaixo de R$ 300 mil não são contabilizados. A pontuação não é linear: quanto mais indicações no mês, maior o valor de cada ponto, premiando o alto volume de forma exponencial — ver tabela de escalonamento em [[CDV-0023]]. O KPI é apurado mensalmente e semestralmente, com a visão semestral normalizando o volume pelo número de meses ativos no período.",
+    "criteria": [
+      "Negócio com status ganho nos funis: Análise de Carteira, Prospecção, Corporate ou Wealth Pilot",
+      "Consultor de indicação deve estar registrado no negócio",
+      "No modelo fee-based: negócios abaixo de R$ 300 mil são excluídos",
+      "Peso no score individual padrão: 40%",
+      "Peso no score individual Time Private: 30%",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0021", "CDV-0023"]
+  },
+  {
+    "id": "CDV-0016",
+    "title": "KPI de Reuniões Iniciais de Soluções Complementares",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Contabiliza reuniões de valor realizadas com clientes da base, nos tipos elegíveis de Soluções Complementares.",
+    "definition": "Uma reunião de Soluções Complementares é contabilizada quando concluída com status de realizada. Os tipos válidos são PP R1, Máquina de Vendas Digital, CAN Fechamento e, para o Time Private, também o tipo MBZ. Reuniões dos tipos Máquina de Vendas Digital e CAN Fechamento creditam ao consultor solicitante registrado na intranet. Os demais tipos creditam ao consultor participante da reunião. A meta mensal padrão é de 3 reuniões por consultor. A pontuação é escalonada — ver [[CDV-0023]].",
+    "criteria": [
+      "Reunião com status concluída",
+      "Tipos válidos: PP R1, Máquina de Vendas Digital, CAN Fechamento",
+      "Time Private: inclui também o tipo MBZ",
+      "Máquina de Vendas Digital e CAN Fechamento: crédito ao solicitante da intranet",
+      "Demais tipos: crédito ao consultor participante",
+      "Meta mensal padrão: 3 reuniões",
+      "Peso no score: 30% (padrão) e 40% (Time Private)",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0021", "CDV-0023"]
+  },
+  {
+    "id": "CDV-0017",
+    "title": "KPI de Captação Líquida",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Mede o percentual de atingimento da meta de captação líquida do consultor no período. Representa a eficiência em atrair e reter patrimônio na plataforma.",
+    "definition": "A Captação Líquida é calculada como o valor líquido de aportes menos resgates dos clientes da base do consultor no período, dividido pela meta individual estabelecida para o mês. O resultado é um percentual de atingimento. Diferente dos outros KPIs, a pontuação pode ser negativa caso a captação líquida seja negativa — ver tabela completa em [[CDV-0023]]. A meta mensal é definida individualmente para cada consultor. Apenas consultores com meta de Captação Líquida ativa no mês são considerados na apuração.",
+    "criteria": [
+      "Captação Líquida = aportes menos resgates do período",
+      "Resultado expresso como percentual da meta individual",
+      "Pontuação pode ser negativa se a captação for negativa",
+      "Apenas consultores com meta ativa no mês são considerados",
+      "Peso no score: 20%",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0021", "CDV-0023"]
+  },
+  {
+    "id": "CDV-0018",
+    "title": "KPI de Retenção — Churn em Número de Clientes",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Mede quantos clientes deixaram de ser base no mês. Zero churns gera bonificação, volumes altos geram penalização no score.",
+    "definition": "O churn é contabilizado quando um cliente encerra o serviço e sai da base do consultor. Clientes recebidos via tombamento que cancelam dentro de 60 dias da transferência têm o churn contabilizado para o consultor anterior, não para o receptor. O KPI penaliza o score de forma progressiva — ver tabela em [[CDV-0023]]: zero churns geram bonificação de 200%, e cinco ou mais churns geram penalização de 100%. Na visão semestral, o volume é normalizado pelo número de meses ativos.",
+    "criteria": [
+      "Contabiliza clientes que encerraram o serviço no mês",
+      "Tombamentos com cancelamento em até 60 dias: churn atribuído ao consultor anterior",
+      "Zero churns: bonificação de 200% no KPI",
+      "Cinco ou mais churns: penalização de 100% no KPI",
+      "Pontuação pode ser negativa",
+      "Peso no score: 10%",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0021", "CDV-0023"]
+  },
+  {
+    "id": "CDV-0019",
+    "title": "KPI Acelerador — Apólices Emitidas",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Contabiliza negócios ganhos no funil de Proteção Patrimonial. É um KPI acelerador: soma diretamente ao score sem tabela de escalonamento.",
+    "definition": "Uma apólice é contabilizada quando um negócio é ganho no funil de Proteção Patrimonial. Diferente dos KPIs principais, as Apólices Emitidas não passam pela tabela de escalonamento [[CDV-0023]]: cada apólice contribui diretamente com seu valor ao score final [[CDV-0021]]. O peso mensal é de 3% e o peso semestral é de 0,5%. Para líderes, o peso mensal é de 0,5%.",
+    "criteria": [
+      "Negócio ganho no funil de Proteção Patrimonial",
+      "Sem tabela de escalonamento: valor bruto somado diretamente ao score",
+      "Peso mensal individual: 3%",
+      "Peso semestral individual: 0,5%",
+      "Peso mensal liderança: 0,5%",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0020", "CDV-0021", "CDV-0024"]
+  },
+  {
+    "id": "CDV-0020",
+    "title": "KPI Acelerador — Venda CAN",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Contabiliza vendas do produto CAN realizadas pelo consultor para clientes da sua base. É um KPI acelerador que soma diretamente ao score.",
+    "definition": "Uma venda CAN é contabilizada quando um negócio é ganho no funil de Mentorias, com o responsável pelo cliente na data de fechamento sendo o consultor. Assim como [[CDV-0019]], não há tabela de escalonamento: cada venda contribui diretamente ao score [[CDV-0021]]. O peso mensal é de 10% e o peso semestral é de 1,5%. Para líderes, o peso mensal é de 1,5%.",
+    "criteria": [
+      "Negócio ganho no funil de Mentorias",
+      "Responsável pelo cliente na data de fechamento deve ser o consultor",
+      "Sem tabela de escalonamento: valor bruto somado diretamente ao score",
+      "Peso mensal individual: 10%",
+      "Peso semestral individual: 1,5%",
+      "Peso mensal liderança: 1,5%",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0019", "CDV-0021", "CDV-0024"]
+  },
+  {
+    "id": "CDV-0021",
+    "title": "Score Final de Avaliação de Performance do Consultor",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "O Score de Performance é a nota final do consultor no período, calculada aplicando os pesos de cada KPI sobre suas respectivas pontuações escalonadas.",
+    "definition": "O score é calculado somando a contribuição ponderada de cada KPI — ver detalhes de pesos em [[CDV-0024]]. Cada KPI passa primeiro pela tabela de escalonamento [[CDV-0023]] que converte o volume realizado em pontuação intermediária. O perfil padrão distribui: 40% Indicações [[CDV-0015]], 30% Soluções [[CDV-0016]], 20% Captação [[CDV-0017]], 10% Churn [[CDV-0018]]. Time Private: 30% Indicações e 40% Soluções. Os KPIs aceleradores [[CDV-0019]] e [[CDV-0020]] somam diretamente sem escalonamento. Na visão semestral, os KPIs de volume são normalizados pelo número de meses ativos antes de entrar na tabela.",
+    "criteria": [
+      "Score = soma da pontuação escalonada de cada KPI multiplicada pelo seu peso",
+      "Perfil padrão: Indicações 40%, Soluções 30%, Captação 20%, Churn 10%",
+      "Perfil Time Private: Indicações 30%, Soluções 40%, Captação 20%, Churn 10%",
+      "KPIs aceleradores (Apólices e CAN) somam diretamente ao score",
+      "Visão semestral: volume normalizado pelo número de meses ativos no semestre",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0015", "CDV-0016", "CDV-0017", "CDV-0018", "CDV-0019", "CDV-0020", "CDV-0022", "CDV-0023", "CDV-0024"]
+  },
+  {
+    "id": "CDV-0022",
+    "title": "Score de Performance na Visão de Liderança",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Para líderes, o score é calculado com base na média de produtividade do time, não no volume individual. O líder é avaliado pela capacidade de fazer o time performar.",
+    "definition": "Na visão de liderança, o volume total realizado pelo time é dividido pelo número de liderados com meta de Captação Líquida ativa no mês, excluindo o próprio líder da contagem. Essa média per capita é aplicada à mesma tabela de escalonamento [[CDV-0023]] dos KPIs individuais. Esse modelo garante comparação justa entre líderes de times de tamanhos diferentes. O próprio líder também tem seus resultados individuais somados à visão de liderança, mas com contribuição zero na contagem do tamanho do time.",
+    "criteria": [
+      "Volume do time dividido pelo número de liderados com meta ativa (excluindo o líder)",
+      "Média per capita aplicada à mesma tabela de escalonamento individual",
+      "O próprio líder soma seus resultados à visão de liderança",
+      "Apenas liderados com meta de Captação Líquida ativa no mês são contados no tamanho do time",
+      "Pesos dos KPIs aceleradores são diferentes na visão de liderança: Apólices 0,5%, CAN 1,5%",
+      "Apuração: mensal e semestral"
+    ],
+    "related": ["CDV-0021", "CDV-0023"]
+  },
+  {
+    "id": "CDV-0023",
+    "title": "Tabela de Escalonamento de Pontuação por KPI",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Cada KPI converte o volume realizado em um percentual intermediário seguindo uma tabela de escalonamento própria. Quanto mais o consultor entrega, maior o percentual liberado.",
+    "definition": "O esforço do consultor não é tratado de forma linear. Cada KPI possui uma tabela de conquistas que converte o volume realizado em um percentual intermediário, ponderado depois pelo peso do KPI no score [[CDV-0024]].\n\nIndicações Fechadas [[CDV-0015]]: 0 = 0% | 1 = 70% | 2 = 100% | 3 = 150% | 4 = 200% | 5 = 300% | 6 = 400% | 7 = 500% | 8 = 600% | 9+ = 700%\n\nSoluções Complementares [[CDV-0016]]: 1 = 40% | 2 = 70% | 3 = 100% | 4 = 115% | 5 = 130% | 6 = 150% | 7 = 170% | 8 = 200% | 9+ = 220%\n\nCaptação Líquida [[CDV-0017]]: abaixo de -50% = -70% | -50% a -35% = -40% | -35% a 0% = -20% | 0% a 35% = 0% | 35% a 50% = 40% | 50% a 70% = 60% | 70% a 100% = 80% | 100% a 120% = 100% | 120% a 150% = 120% | 150% a 180% = 150% | 180% a 250% = 200% | acima de 250% = 250%\n\nChurn [[CDV-0018]]: 0 clientes = +200% | 1 = 70% | 2 = 0% | 3 = -20% | 4 = -50% | 5+ = -100%\n\nApólices [[CDV-0019]] e CAN [[CDV-0020]]: sem tabela, valor bruto somado diretamente.",
+    "criteria": [
+      "Cada KPI possui tabela de escalonamento própria",
+      "O percentual liberado é o resultado intermediário antes da aplicação do peso",
+      "Captação Líquida e Churn podem liberar percentuais negativos",
+      "Apólices e CAN somam valor bruto diretamente, sem escalonamento",
+      "Na visão semestral, o volume dos KPIs de quantidade é normalizado pelo número de meses ativos antes de entrar na tabela"
+    ],
+    "related": ["CDV-0015", "CDV-0016", "CDV-0017", "CDV-0018", "CDV-0019", "CDV-0020", "CDV-0021", "CDV-0024"]
+  },
+  {
+    "id": "CDV-0024",
+    "title": "Pesos por KPI e Cálculo do Percentual Liberado Final",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "O percentual liberado final é calculado multiplicando o percentual intermediário de cada KPI pelo seu peso no perfil do consultor e somando todas as contribuições.",
+    "definition": "Após cada KPI gerar seu percentual intermediário pela tabela de conquistas [[CDV-0023]], esse valor é multiplicado pelo peso do KPI no perfil do consultor. A soma resulta no percentual liberado final do período [[CDV-0021]].\n\nPerfil padrão: Indicações [[CDV-0015]] 40%, Soluções [[CDV-0016]] 30%, Captação [[CDV-0017]] 20%, Churn [[CDV-0018]] 10%.\nTime Private: Indicações 30%, Soluções 40%, Captação 20%, Churn 10%.\nAceleradores mensais: Apólices [[CDV-0019]] 3%, CAN [[CDV-0020]] 10%.\nAceleradores semestrais: Apólices 0,5%, CAN 1,5%.\nAceleradores liderança: Apólices 0,5%, CAN 1,5%.\n\nO percentual final pode ser negativo caso Captação e Churn penalizem mais do que os demais KPIs entregam.",
+    "criteria": [
+      "Percentual liberado final = soma de (percentual intermediário × peso) de cada KPI",
+      "Perfil padrão: Indicações 40%, Soluções 30%, Captação 20%, Churn 10%",
+      "Perfil Time Private: Indicações 30%, Soluções 40%, Captação 20%, Churn 10%",
+      "Aceleradores mensais: Apólices 3%, CAN 10%",
+      "Aceleradores semestrais: Apólices 0,5%, CAN 1,5%",
+      "Aceleradores liderança: Apólices 0,5%, CAN 1,5%",
+      "O percentual final pode ser negativo caso Captação e Churn penalizem mais do que os demais KPIs entregam"
+    ],
+    "related": ["CDV-0021", "CDV-0023"]
+  },
+  {
+    "id": "CDV-0025",
+    "title": "Faturamento Gerado por Primeiras Contratações",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Faturamento Novos é o total faturado por clientes que estão contratando um serviço do CDV pela primeira vez, em qualquer modalidade.",
+    "definition": "O Faturamento Novos consolida o valor gerado por contratos de primeira contratação [[CDV-0007]], independente do serviço contratado. São considerados os serviços Wealth Planner, Wealth Pilot, Wealth Investors Club, Wealth Advisor e Planejamento Financeiro. O valor considerado é o faturamento bruto da transação aprovada, sem dedução de reembolsos. O líder do time é o responsável pelo acompanhamento desse indicador.",
+    "criteria": [
+      "Considera apenas primeiras contratações do cliente no CDV",
+      "Serviços elegíveis: Wealth Planner, Wealth Pilot, Wealth Investors Club, Wealth Advisor e Planejamento Financeiro",
+      "Valor baseado no faturamento bruto da transação aprovada",
+      "Responsável pelo acompanhamento: líder do time"
+    ],
+    "related": ["CDV-0007", "CDV-0026"]
+  },
+  {
+    "id": "CDV-0026",
+    "title": "Faturamento Gerado por Renovações de Contrato",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Faturamento Renovação é o total faturado por clientes que estão renovando um contrato Oneshot já existente com o CDV.",
+    "definition": "O Faturamento Renovação consolida o valor gerado por contratos que passaram pelo pipeline de Renovação de Contratos [[CDV-0010]] e foram ganhos. Diferente do Faturamento Novos [[CDV-0025]], considera apenas clientes que já tinham contrato anterior e estão recontratando o serviço. O valor considerado é a soma das transações associadas ao negócio de renovação. O líder do time é o responsável pelo acompanhamento desse indicador.",
+    "criteria": [
+      "Considera apenas contratos com renovação fechada no pipeline de Renovação de Contratos",
+      "Cliente deve ter contrato anterior registrado",
+      "Valor baseado na soma das transações associadas ao negócio de renovação",
+      "Responsável pelo acompanhamento: líder do time"
+    ],
+    "related": ["CDV-0010", "CDV-0025"]
+  },
+  {
+    "id": "CDV-0027",
+    "title": "Classificação de Clientes por Faixa de Patrimônio (Tier)",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "O tier de patrimônio agrupa clientes em faixas com base no valor consolidado mais recente de suas carteiras elegíveis.",
+    "definition": "O tier de patrimônio é determinado pelo somatório dos valores de fechamento mais recentes de todas as carteiras ativas e fee-based do cliente. Para cada carteira, considera-se apenas a cotação mais atual com pelo menos 3 dias de defasagem. Carteiras encerradas ou com modelo de cobrança diferente de fee-based são excluídas do cálculo. Clientes sem nenhum patrimônio registrado são classificados automaticamente na faixa mais baixa.\n\nFaixas de enquadramento:\n- 250K → abaixo de R$ 250 mil\n- +250K → entre R$ 250 mil e R$ 500 mil\n- +500K → entre R$ 500 mil e R$ 1 milhão\n- +1MM → entre R$ 1 milhão e R$ 5 milhões\n- +5MM → entre R$ 5 milhões e R$ 10 milhões\n- +10MM → acima de R$ 10 milhões",
+    "criteria": [
+      "Considerar apenas carteiras ativas e fee-based",
+      "Para cada carteira elegível, buscar o valor de fechamento mais recente em reais",
+      "A cotação utilizada deve ter pelo menos 3 dias de defasagem",
+      "O patrimônio final é a soma dos valores de fechamento de todas as carteiras elegíveis",
+      "Clientes sem patrimônio registrado são classificados como 250K por padrão",
+      "Faixas: 250K (< R$250k), +250K (250k–500k), +500K (500k–1MM), +1MM (1MM–5MM), +5MM (5MM–10MM), +10MM (> 10MM)"
+    ],
+    "related": ["CDV-0030", "CDV-0031"]
+  },
+  {
+    "id": "CDV-0028",
+    "title": "Modelo de Atendimento Team-Based",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Team-based é o modelo de relacionamento em que uma equipe multidisciplinar atende conjuntamente um cliente.",
+    "definition": "No modelo team-based, o cliente não é atendido por um único consultor, mas por uma equipe formada por planejadores, analistas de mesa e especialistas. A indicação de que um cliente está nesse modelo é controlada diretamente no CRM, por meio da propriedade `cliente_esta_no_atendimento_team_based_`, que sinaliza se o cliente está ou não enquadrado nesse modelo de atendimento.",
+    "criteria": [
+      "O atendimento é realizado por uma equipe multidisciplinar (planejadores, analistas de mesa e especialistas)",
+      "A classificação é controlada no CRM pela propriedade cliente_esta_no_atendimento_team_based_",
+      "Valor true → cliente está no modelo team-based",
+      "Valor false (ou ausente) → cliente não está no modelo team-based"
+    ],
+    "related": []
+  },
+  {
+    "id": "CDV-0029",
+    "title": "Data de Contratação do Cliente",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Data em que o cliente formalizou a contratação do serviço do Clube do Valor, registrada de forma distinta conforme o tipo de serviço contratado.",
+    "definition": "A data de contratação marca o início formal do vínculo do cliente com o Clube do Valor. O registro dessa data varia conforme o serviço. Para clientes dos serviços Advisor, Wealth Management e Planner, a data corresponde à entrada do negócio na etapa \"Vinculação de código\" do pipeline \"Análise de carteira\". Para clientes Pilot e WIC, a data corresponde à entrada do ticket na etapa \"Contrato assinado\" do pipeline \"Wealth Pilot\".",
+    "criteria": [
+      "Advisor e Wealth Management → data de entrada na etapa Vinculação de código do pipeline Análise de carteira",
+      "Planner → data de entrada na etapa Vinculação de código do pipeline Análise de carteira",
+      "Pilot → data de entrada na etapa Contrato assinado do pipeline Wealth Pilot",
+      "WIC → data de entrada na etapa Contrato assinado do pipeline Wealth Pilot"
+    ],
+    "related": ["CDV-0032", "CDV-0033"]
+  },
+  {
+    "id": "CDV-0030",
+    "title": "Indicativo de Desconto na Cobrança Fee-Based",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Desconto de faixa indica se um cliente fee-based está sendo cobrado em uma tabela de cobrança abaixo da padrão para o seu patrimônio, conforme acordo na contratação.",
+    "definition": "Clientes no modelo fee-based são alocados em tabelas de cobrança vinculadas à sua faixa patrimonial [[CDV-0027]]. Em casos acordados, o cliente pode receber um desconto de faixa, sendo cobrado por uma tabela correspondente a um patrimônio menor do que o seu real. Esse indicativo sinaliza a existência desse benefício.",
+    "criteria": [
+      "Aplica-se exclusivamente a clientes no modelo de cobrança fee-based",
+      "O desconto é fruto de um acordo individual na contratação",
+      "Quando presente, o cliente é cobrado por uma tabela de faixa inferior à padrão para seu patrimônio"
+    ],
+    "related": ["CDV-0027", "CDV-0031"]
+  },
+  {
+    "id": "CDV-0031",
+    "title": "Estrutura de Fees do Cliente Fee-Based",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "A tabela de cobrança define o percentual anual cobrado sobre o patrimônio investido do cliente, conforme a faixa patrimonial e o serviço contratado.",
+    "definition": "Cada tabela de cobrança corresponde a uma faixa patrimonial [[CDV-0027]] e determina o fee anual incidente sobre o patrimônio investido do cliente. Essa estrutura é acordada no momento da contratação e está associada exclusivamente aos serviços Wealth Advisor e Wealth Management no modelo fee-based. Clientes com desconto de faixa [[CDV-0030]] podem estar vinculados a uma tabela que não corresponde à sua faixa patrimonial real.",
+    "criteria": [
+      "Aplicável apenas aos serviços Wealth Advisor e Wealth Management no modelo fee-based",
+      "Definida na contratação",
+      "Cada tabela corresponde a uma faixa patrimonial",
+      "O fee é expresso como percentual anual sobre o patrimônio investido",
+      "Clientes com desconto de faixa podem estar em uma tabela de faixa inferior à do seu patrimônio real"
+    ],
+    "related": ["CDV-0027", "CDV-0030"]
+  },
+  {
+    "id": "CDV-0032",
+    "title": "Data do Último Tombamento do Cliente",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Registra a data em que ocorreu a troca mais recente do assessor responsável pelo cliente.",
+    "definition": "O tombamento é o evento de transferência de responsabilidade de um cliente de um assessor para outro. A data do último tombamento é utilizada em outras regras de negócio — como o Status de Cobertura [[CDV-0033]] — para determinar se o cliente ainda está em período de onboarding com o novo assessor.",
+    "criteria": [
+      "Registra a data da troca mais recente de assessor responsável",
+      "Utilizada como referência para calcular o período de onboarding com o novo assessor (6 meses a partir da data de contrato)"
+    ],
+    "related": ["CDV-0029", "CDV-0033"]
+  },
+  {
+    "id": "CDV-0033",
+    "title": "Classificação de Cobertura do Cliente pelo Assessor",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "O status de cobertura indica se o assessor está dentro da régua de relacionamento com o cliente, classificando-o como Coberto ou Descoberto com base na recência das reuniões realizadas.",
+    "definition": "Todo cliente ativo e fee-based recebe um status de cobertura. São elegíveis clientes com status Ativo, Onboarding, Aguardando reunião Onboarding ou Pendente, com carteira ativa e fee-based. Clientes Pilot são sempre classificados como Cobertos.\n\nA cobertura é calculada com base na reunião mais recente com status COMPLETED cuja data já tenha passado. Para efeito de reunião agendada, são consideradas reuniões com status SCHEDULED, em branco ou sem status, desde que a data seja igual ou posterior a ontem.\n\nA frequência padrão é de 30 dias. Se o cliente possuir frequência personalizada cadastrada e o último tombamento [[CDV-0032]] tiver ocorrido mais de 6 meses após a data de contrato [[CDV-0029]], a frequência personalizada prevalece. Quando ambas existem, usa-se sempre a menor.\n\nStatus possíveis:\n- Em dia: reunião dentro do prazo → Coberto [[CDV-0001]]\n- Marcar: prazo se encerra em até 10 dias → Coberto\n- Marcado: prazo venceu, mas há reunião agendada → Descoberto [[CDV-0002]]\n- Atrasado: prazo venceu sem reunião agendada → Descoberto\n- Sem registro: nunca houve reunião concluída → Descoberto",
+    "criteria": [
+      "Aplicável a clientes ativos e fee-based com status Ativo, Onboarding, Aguardando reunião Onboarding ou Pendente",
+      "Clientes Pilot são sempre Cobertos",
+      "Considerar apenas reuniões COMPLETED com data no passado",
+      "Reunião agendada válida: status SCHEDULED, em branco ou sem status, com data >= ontem",
+      "Frequência padrão: 30 dias",
+      "Frequência personalizada prevalece somente se o último tombamento ocorreu mais de 6 meses após a data de contrato",
+      "Quando ambas as frequências existem, usar a menor",
+      "Coberto = status Em dia ou Marcar",
+      "Descoberto = status Marcado, Atrasado ou Sem registro"
+    ],
+    "related": ["CDV-0001", "CDV-0002", "CDV-0029", "CDV-0032"]
+  },
+  {
+    "id": "CDV-0034",
+    "title": "Indicativo de Preenchimento do Formulário de Anamnese",
+    "status": "ativa",
+    "createdAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "summary": "Propriedade do CRM que indica se o cliente preencheu ou não o formulário de anamnese (R1).",
+    "definition": "A anamnese é um formulário aplicado ao cliente no início do relacionamento, utilizado para levantar informações relevantes para o planejamento. Essa propriedade registra no CRM se o cliente já realizou esse preenchimento.",
+    "criteria": [
+      "Propriedade registrada diretamente no CRM",
+      "Valor indica se o cliente preencheu ou não preencheu o formulário de anamnese R1"
+    ],
+    "related": []
+  }
+]
