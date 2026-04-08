@@ -324,6 +324,27 @@
   .ydoc-stat-n{font-size:18px;font-weight:700;color:var(--navy);}
   .ydoc-stat-l{font-size:10px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
 
+  /* TAGS */
+  .tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .12s;user-select:none;white-space:nowrap;}
+  .tag-chip-filter{background:var(--gray-100);color:var(--gray-500);border-color:var(--gray-200);}
+  .tag-chip-filter:hover{background:var(--blue-pale);color:var(--blue);border-color:var(--blue-border);}
+  .tag-chip-filter.sel{background:var(--blue-pale);color:var(--blue);border-color:var(--blue-border);}
+  .tag-chip-rule{background:var(--blue-pale);color:var(--blue);border-color:var(--blue-border);}
+  .tag-filter-bar{padding:6px 12px 8px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--border);}
+  .tag-filter-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gray-400);margin-bottom:2px;}
+  .tag-filter-chips{display:flex;flex-wrap:wrap;gap:4px;}
+  /* TAG INPUT */
+  .tag-input-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-height:36px;border:1px solid var(--border);border-radius:7px;padding:5px 8px;background:#fff;cursor:text;transition:border-color .15s;}
+  .tag-input-wrap:focus-within{border-color:var(--blue);}
+  .tag-pill{display:inline-flex;align-items:center;gap:3px;background:var(--blue-pale);color:var(--blue);border:1px solid var(--blue-border);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:600;}
+  .tag-pill-rm{cursor:pointer;font-size:10px;opacity:.6;margin-left:2px;}
+  .tag-pill-rm:hover{opacity:1;}
+  .tag-text-input{border:none;outline:none;font-size:12.5px;font-family:var(--font);min-width:100px;background:transparent;color:var(--gray-900);}
+  .tag-suggestions{position:absolute;z-index:999;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);max-height:160px;overflow-y:auto;min-width:180px;}
+  .tag-sug-item{padding:7px 12px;font-size:12.5px;cursor:pointer;transition:background .1s;}
+  .tag-sug-item:hover,.tag-sug-item.sel{background:var(--blue-pale);color:var(--blue);}
+  .tag-sug-new{font-style:italic;color:var(--green);}
+
   /* SYNC STATUS */
   .sync-toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);z-index:2000;display:flex;align-items:center;gap:8px;transition:opacity .3s;opacity:0;pointer-events:none;}
   .sync-toast.show{opacity:1;}
@@ -355,6 +376,10 @@
 
 <div class="app-layout" id="appLayout">
   <aside class="sidebar" id="sidebar">
+    <div class="tag-filter-bar" id="tagFilterBar" style="display:none">
+      <div class="tag-filter-label">Filtrar por tag</div>
+      <div class="tag-filter-chips" id="tagFilterChips"></div>
+    </div>
     <div class="rules-list" id="rulesList"></div>
     <div class="drag-handle" id="dragHandle" title="Arrastar para redimensionar"></div>
   </aside>
@@ -409,7 +434,16 @@
         <div id="defRelatedPreview" style="display:none;margin-top:6px;font-size:11.5px;color:var(--blue);display:flex;align-items:center;gap:6px;flex-wrap:wrap"></div>
       </div>
       <div class="form-group"><label class="form-label">Critérios / Checklist (uma linha por item)</label><textarea class="form-textarea" id="fCriteria" placeholder="Patrimônio mínimo: R$ 300k&#10;Suitability obrigatório"></textarea></div>
-      <div class="form-group"><label class="form-label">Regras Relacionadas (códigos por vírgula)</label><input class="form-input" id="fRelated" placeholder="ex: WS-002, WS-005"></div>
+      <div class="form-group"><label class="form-label">Regras Relacionadas (códigos por vírgula)</label><input class="form-input" id="fRelated" placeholder="ex: CDV-0001, CDV-0002"></div>
+      <div class="form-group" style="position:relative">
+        <label class="form-label">Tags</label>
+        <div class="form-hint">Clique nas tags existentes ou digite para criar uma nova e pressione Enter</div>
+        <div class="tag-input-wrap" id="tagInputWrap" onclick="document.getElementById('tagTextInput').focus()">
+          <div id="tagPills"></div>
+          <input id="tagTextInput" class="tag-text-input" placeholder="Adicionar tag…" autocomplete="off" oninput="onTagInput()" onkeydown="onTagKey(event)">
+        </div>
+        <div class="tag-suggestions" id="tagSuggestions" style="display:none"></div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn-delete" id="modalDeleteBtn" style="display:none" onclick="deleteCurrentRule()">🗑 Excluir regra</button>
@@ -575,7 +609,7 @@ async function loadRules(){
     document.getElementById('rulesList').innerHTML = `<div class="no-results" style="color:var(--red)">⚠ Erro ao carregar.<br><small>${e.message}</small><br><br><button onclick="loadRules()" style="margin-top:6px;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:12px">Tentar novamente</button></div>`;
     return;
   }
-  renderList(); renderHome(); initDrag();
+  renderTagFilter(); renderList(); renderHome(); initDrag();
 }
 
 // ── SAVE TO GITHUB ──
@@ -607,7 +641,8 @@ async function saveToGitHub(msg){
 }
 
 // ── STATE ──
-let tabs=[], activeTabId=null, activeCat='all', sortCol='id', sortAsc=true, globalTerm='';
+let tabs=[], activeTabId=null, activeCat='all', sortCol='id', sortAsc=true, globalTerm='', activeTag=null;
+let _formTags=[];
 const CAT_LABELS={onboarding:'Onboarding',alocacao:'Alocação',atendimento:'Atendimento',fee:'Fee & Cobrança',compliance:'Compliance'};
 const SCOPE_LABELS={wa:'Wealth Advisor',wm:'Wealth Management',ambos:'WA + WM'};
 
@@ -628,19 +663,74 @@ function clearGlobalSearch(){
   onGlobalSearch('');
 }
 
+// ── TAGS ──
+function getAllTags(){
+  const s=new Set();
+  rules.filter(r=>!r.deleted).forEach(r=>(r.tags||[]).forEach(t=>s.add(t)));
+  return[...s].sort();
+}
+function renderTagFilter(){
+  const tags=getAllTags();
+  const bar=document.getElementById('tagFilterBar');
+  const chips=document.getElementById('tagFilterChips');
+  if(!tags.length){bar.style.display='none';return;}
+  bar.style.display='';
+  chips.innerHTML=tags.map(t=>`<span class="tag-chip tag-chip-filter${activeTag===t?' sel':''}" onclick="filterTag('${t}')">${t}</span>`).join('');
+}
+function filterTag(t){
+  activeTag=activeTag===t?null:t;
+  renderTagFilter();renderList();if(!activeTabId)renderHome();
+}
+// form tag input
+function renderTagPills(){
+  const wrap=document.getElementById('tagPills');
+  wrap.innerHTML=_formTags.map((t,i)=>`<span class="tag-pill">${t}<span class="tag-pill-rm" onclick="removeFormTag(${i})">✕</span></span>`).join('');
+}
+function removeFormTag(i){_formTags.splice(i,1);renderTagPills();}
+function onTagInput(){
+  const val=document.getElementById('tagTextInput').value.trim().toLowerCase();
+  const sug=document.getElementById('tagSuggestions');
+  const existing=getAllTags().filter(t=>!_formTags.includes(t)&&t.toLowerCase().includes(val));
+  const canCreate=val.length>1&&!getAllTags().map(t=>t.toLowerCase()).includes(val)&&!_formTags.map(t=>t.toLowerCase()).includes(val);
+  if(!val&&!existing.length){sug.style.display='none';return;}
+  const items=[...existing.map((t,i)=>`<div class="tag-sug-item" onmousedown="addFormTag('${t}')">${t}</div>`),
+    ...(canCreate?[`<div class="tag-sug-item tag-sug-new" onmousedown="addFormTag('${val}',true)">+ Criar "${val}"</div>`]:[])];
+  if(!items.length){sug.style.display='none';return;}
+  sug.innerHTML=items.join('');sug.style.display='';
+}
+function addFormTag(t,create=false){
+  const tag=create?t.trim():t;
+  if(tag&&!_formTags.includes(tag)){_formTags.push(tag);renderTagPills();}
+  document.getElementById('tagTextInput').value='';
+  document.getElementById('tagSuggestions').style.display='none';
+}
+function onTagKey(e){
+  if(e.key==='Enter'||e.key===','||e.key===';'){
+    e.preventDefault();
+    const val=document.getElementById('tagTextInput').value.trim().replace(/,|;/g,'');
+    if(val)addFormTag(val,true);
+  } else if(e.key==='Backspace'&&!document.getElementById('tagTextInput').value&&_formTags.length){
+    _formTags.pop();renderTagPills();
+  } else if(e.key==='Escape'){
+    document.getElementById('tagSuggestions').style.display='none';
+  }
+}
+document.addEventListener('click',e=>{if(!e.target.closest('#tagInputWrap')&&!e.target.closest('#tagSuggestions'))document.getElementById('tagSuggestions').style.display='none';});
+
 // ── SIDEBAR ──
 function renderList(){
   const el=document.getElementById('rulesList');
   const term=globalTerm.toLowerCase();
   const filtered=rules.filter(r=>{
     if(r.deleted) return false;
-    const catOk=activeCat==='all'||r.category===activeCat;
-    if(!term) return catOk;
+    if(activeTag&&!(r.tags||[]).includes(activeTag)) return false;
+    if(!term) return true;
     const matchTitle=r.id.toLowerCase().includes(term)||r.title.toLowerCase().includes(term);
     const matchSummary=(r.summary||'').toLowerCase().includes(term);
     const matchDef=(r.definition||'').toLowerCase().includes(term);
     const matchCriteria=(r.criteria||[]).some(c=>c.toLowerCase().includes(term));
-    return catOk&&(matchTitle||matchSummary||matchDef||matchCriteria);
+    const matchTag=(r.tags||[]).some(t=>t.toLowerCase().includes(term));
+    return matchTitle||matchSummary||matchDef||matchCriteria||matchTag;
   });
   if(!filtered.length){el.innerHTML='<div class="no-results">Nenhuma regra encontrada</div>';return;}
   el.innerHTML=filtered.map(r=>{
@@ -654,12 +744,14 @@ function renderList(){
       if((r.criteria||[]).some(c=>c.toLowerCase().includes(t))) hits.push('critérios');
       if(hits.length) hitLabel=`<div style="font-size:10px;color:var(--blue);margin-top:4px">🔍 em: ${hits.join(' · ')}</div>`;
     }
+    const tagHtml=(r.tags||[]).length?`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:5px">${(r.tags||[]).map(t=>`<span class="tag-chip tag-chip-rule" style="font-size:10px;padding:1px 7px">${t}</span>`).join('')}</div>`:'';
     return`<div class="rule-item ${activeTabId===r.id?'active':''}" onclick="openRule('${r.id}')">
       <div class="rule-item-code">${r.id}</div>
       <div class="rule-item-title">${hl(r.title,globalTerm)}</div>
       <div class="rule-item-badges">
         <span class="badge ${r.status||'ativa'}">${r.status==='inativa'?'Inativa':'Ativa'}</span>
       </div>
+      ${tagHtml}
       ${hitLabel}
     </div>`;
   }).join('');
@@ -810,6 +902,7 @@ function renderContent(){
           <span class="owner-tag">🕐 Criado em ${fmtDatetime(rule.createdAt)}</span>
           <span class="owner-tag">✏️ Modificado em ${fmtDatetime(rule.updatedAt)}</span>
         </div>
+        ${(rule.tags||[]).length?`<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px">${(rule.tags||[]).map(t=>`<span class="tag-chip tag-chip-rule" onclick="filterTag('${t}');goHome()" title="Filtrar por '${t}'">${t}</span>`).join('')}</div>`:''}
       </div>
       <div class="cards-grid">
         <div class="info-card full">
@@ -984,6 +1077,7 @@ function closeModal(){ document.getElementById('modalOverlay').classList.remove(
 function overlayClick(e){ if(e.target===document.getElementById('modalOverlay'))closeModal(); }
 function clearForm(){
   ['fTitle','fSummary','fDefinition','fCriteria','fRelated'].forEach(i=>document.getElementById(i).value='');
+  _formTags=[];renderTagPills();
   document.getElementById('fStatus').value='ativa';
   document.getElementById('fPrefix').value='WS';
 }
@@ -996,12 +1090,12 @@ async function saveRule(){
   const cr=document.getElementById('fCriteria').value.trim();
   const rel=document.getElementById('fRelated').value.trim();
   const now=new Date().toISOString();
-  const newRule={id:code,title,status:document.getElementById('fStatus').value,createdAt:now,updatedAt:now,summary:document.getElementById('fSummary').value.trim(),definition:document.getElementById('fDefinition').value.trim(),criteria:cr?cr.split('\n').map(s=>s.trim()).filter(Boolean):[],related:rel?rel.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean):[]};
+  const newRule={id:code,title,status:document.getElementById('fStatus').value,createdAt:now,updatedAt:now,summary:document.getElementById('fSummary').value.trim(),definition:document.getElementById('fDefinition').value.trim(),criteria:cr?cr.split('\n').map(s=>s.trim()).filter(Boolean):[],related:rel?rel.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean):[],tags:[..._formTags]};
   rules.push(newRule);
   setSaving(true);
   const ok=await saveToGitHub('add rule '+code);
   setSaving(false);
-  if(ok){ closeModal();renderList();openRule(code); }
+  if(ok){ closeModal();renderTagFilter();renderList();openRule(code); }
   else{ rules.pop(); }
 }
 
@@ -1016,6 +1110,7 @@ function editRule(id){
   document.getElementById('fStatus').value=rule.status||'ativa';
   document.getElementById('fSummary').value=rule.summary;document.getElementById('fDefinition').value=rule.definition;
   document.getElementById('fCriteria').value=(rule.criteria||[]).join('\n');document.getElementById('fRelated').value=(rule.related||[]).join(', ');
+  _formTags=[...(rule.tags||[])];renderTagPills();
   document.getElementById('modalTitle').textContent='Editar — '+rule.id;
   document.getElementById('modalDeleteBtn').style.display='';
   document.getElementById('modalSaveBtn').onclick=()=>updateRule(id);
@@ -1030,13 +1125,13 @@ async function updateRule(id){
   const rel=document.getElementById('fRelated').value.trim();
   const prev={...rules[idx]};
   // snapshot da versão anterior antes de salvar
-  const snapshot={savedAt:rules[idx].updatedAt,title:rules[idx].title,status:rules[idx].status,summary:rules[idx].summary,definition:rules[idx].definition,criteria:[...(rules[idx].criteria||[])],related:[...(rules[idx].related||[])]};
+  const snapshot={savedAt:rules[idx].updatedAt,title:rules[idx].title,status:rules[idx].status,summary:rules[idx].summary,definition:rules[idx].definition,criteria:[...(rules[idx].criteria||[])],related:[...(rules[idx].related||[])],tags:[...(rules[idx].tags||[])]};
   const history=[...(rules[idx].history||[]),snapshot];
-  rules[idx]={...rules[idx],title:document.getElementById('fTitle').value.trim(),status:document.getElementById('fStatus').value,updatedAt:new Date().toISOString(),summary:document.getElementById('fSummary').value.trim(),definition:document.getElementById('fDefinition').value.trim(),criteria:cr?cr.split('\n').map(s=>s.trim()).filter(Boolean):[],related:rel?rel.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean):[],history};
+  rules[idx]={...rules[idx],title:document.getElementById('fTitle').value.trim(),status:document.getElementById('fStatus').value,updatedAt:new Date().toISOString(),summary:document.getElementById('fSummary').value.trim(),definition:document.getElementById('fDefinition').value.trim(),criteria:cr?cr.split('\n').map(s=>s.trim()).filter(Boolean):[],related:rel?rel.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean):[],tags:[..._formTags],history};
   setSaving(true);
   const ok=await saveToGitHub('update rule '+id);
   setSaving(false);
-  if(ok){ closeModal();renderList();renderContent();if(!activeTabId)renderHome(); }
+  if(ok){ closeModal();renderTagFilter();renderList();renderContent();if(!activeTabId)renderHome(); }
   else{ rules[idx]=prev; }
 }
 
