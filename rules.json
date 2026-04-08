@@ -16,7 +16,10 @@
       "Clientes que cancelaram na data de referência são excluídos",
       "O consultor responsável na data é quem responde pelo status"
     ],
-    "related": ["CDV-0002", "CDV-0003"]
+    "related": [
+      "CDV-0002",
+      "CDV-0003"
+    ]
   },
   {
     "id": "CDV-0002",
@@ -32,7 +35,11 @@
       "Não há prazo máximo formal sem reunião",
       "O consultor responsável na data responde pelo cliente descoberto"
     ],
-    "related": ["CDV-0001", "CDV-0003", "CDV-0004"]
+    "related": [
+      "CDV-0001",
+      "CDV-0003",
+      "CDV-0004"
+    ]
   },
   {
     "id": "CDV-0003",
@@ -48,7 +55,10 @@
       "Considera apenas clientes oficialmente na carteira na data de referência",
       "Reuniões anteriores à entrada do cliente na carteira não afetam o percentual do consultor"
     ],
-    "related": ["CDV-0001", "CDV-0002"]
+    "related": [
+      "CDV-0001",
+      "CDV-0002"
+    ]
   },
   {
     "id": "CDV-0004",
@@ -65,7 +75,9 @@
       "Ativos sem cotação disponível são reportados separadamente e não entram no total",
       "Calculado diariamente por consultor"
     ],
-    "related": ["CDV-0002"]
+    "related": [
+      "CDV-0002"
+    ]
   },
   {
     "id": "CDV-0005",
@@ -82,7 +94,9 @@
       "O valor considerado é o faturamento gerado pelo indicado, não o valor do contrato",
       "Comparado com a meta de indicações fechadas do período"
     ],
-    "related": ["CDV-0015"]
+    "related": [
+      "CDV-0015"
+    ]
   },
   {
     "id": "CDV-0006",
@@ -99,7 +113,10 @@
       "A reunião precisa estar com status concluída",
       "Percentual = clientes com PP realizada dividido pelo total de clientes ativos da base"
     ],
-    "related": ["CDV-0001", "CDV-0003"]
+    "related": [
+      "CDV-0001",
+      "CDV-0003"
+    ]
   },
   {
     "id": "CDV-0007",
@@ -115,7 +132,10 @@
       "Crédito atribuído ao consultor vendedor da transação",
       "Reembolsos e chargebacks são registrados separadamente"
     ],
-    "related": ["CDV-0008", "CDV-0009"]
+    "related": [
+      "CDV-0008",
+      "CDV-0009"
+    ]
   },
   {
     "id": "CDV-0008",
@@ -131,7 +151,10 @@
       "Calculado por consultor e por data de aprovação da transação",
       "Em reembolsos, a data do cancelamento tem prioridade sobre a data de aprovação original"
     ],
-    "related": ["CDV-0007", "CDV-0009"]
+    "related": [
+      "CDV-0007",
+      "CDV-0009"
+    ]
   },
   {
     "id": "CDV-0009",
@@ -147,7 +170,10 @@
       "Baseado no Faturamento Bruto, sem dedução de reembolsos",
       "Calculado por consultor e por período"
     ],
-    "related": ["CDV-0007", "CDV-0008"]
+    "related": [
+      "CDV-0007",
+      "CDV-0008"
+    ]
   },
   {
     "id": "CDV-0010",
@@ -164,7 +190,12 @@
       "Etapas do pipeline: Análise Pendente, Probabilidade de Renovação, Reunião de Renovação Agendada, Contrato Renovado, Renovação Recusada",
       "Consultor responsável pelo cliente conduz o processo"
     ],
-    "related": ["CDV-0007", "CDV-0011", "CDV-0012", "CDV-0013"]
+    "related": [
+      "CDV-0007",
+      "CDV-0011",
+      "CDV-0012",
+      "CDV-0013"
+    ]
   },
   {
     "id": "CDV-0011",
@@ -181,7 +212,11 @@
       "Prazo vencido: prazo de renovação ultrapassado com negócio ainda em aberto",
       "O status é atualizado conforme o avanço do negócio no pipeline"
     ],
-    "related": ["CDV-0010", "CDV-0012", "CDV-0014"]
+    "related": [
+      "CDV-0010",
+      "CDV-0012",
+      "CDV-0014"
+    ]
   },
   {
     "id": "CDV-0012",
@@ -197,7 +232,10 @@
       "Registrada quando o negócio avança da etapa de Análise Pendente",
       "O sistema calcula a taxa de conversão histórica por faixa de probabilidade com base nos últimos dois meses"
     ],
-    "related": ["CDV-0010", "CDV-0011"]
+    "related": [
+      "CDV-0010",
+      "CDV-0011"
+    ]
   },
   {
     "id": "CDV-0013",
@@ -214,7 +252,10 @@
       "Data Combinada de Pagamento é preenchida pelo consultor durante a negociação",
       "Ambos os campos ficam nulos após o encerramento do negócio"
     ],
-    "related": ["CDV-0010", "CDV-0011"]
+    "related": [
+      "CDV-0010",
+      "CDV-0011"
+    ]
   },
   {
     "id": "CDV-0014",
@@ -230,7 +271,9 @@
       "Os motivos são padronizados e pré-definidos no sistema",
       "Utilizado para análise de padrões de churn e melhoria do processo de renovação"
     ],
-    "related": ["CDV-0011"]
+    "related": [
+      "CDV-0011"
+    ]
   },
   {
     "id": "CDV-0015",
@@ -248,19 +291,22 @@
       "Peso no score individual Time Private: 30%",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0021", "CDV-0023"]
+    "related": [
+      "CDV-0021",
+      "CDV-0023"
+    ]
   },
   {
     "id": "CDV-0016",
     "title": "KPI de Reuniões Iniciais de Soluções Complementares",
     "status": "ativa",
     "createdAt": "2026-04-08T12:00:00.000Z",
-    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-08T14:36:33.398Z",
     "summary": "Contabiliza reuniões de valor realizadas com clientes da base, nos tipos elegíveis de Soluções Complementares.",
-    "definition": "Uma reunião de Soluções Complementares é contabilizada quando concluída com status de realizada. Os tipos válidos são PP R1, Máquina de Vendas Digital, CAN Fechamento e, para o Time Private, também o tipo MBZ. Reuniões dos tipos Máquina de Vendas Digital e CAN Fechamento creditam ao consultor solicitante registrado na intranet. Os demais tipos creditam ao consultor participante da reunião. A meta mensal padrão é de 3 reuniões por consultor. A pontuação é escalonada — ver [[CDV-0023]].",
+    "definition": "Uma reunião de Soluções Complementares é contabilizada quando concluída com status de realizada. Os tipos válidos são PP R1, Máquina de Vendas Digital, CAN (todas) e, para o Time Private, também o tipo MBZ. Reuniões dos tipos Máquina de Vendas Digital e CAN creditam ao consultor solicitante registrado na intranet. Os demais tipos creditam ao consultor participante da reunião. A meta mensal padrão é de 3 reuniões por consultor. A pontuação é escalonada — ver [[CDV-0023]].",
     "criteria": [
       "Reunião com status concluída",
-      "Tipos válidos: PP R1, Máquina de Vendas Digital, CAN Fechamento",
+      "Tipos válidos: PP R1, Máquina de Vendas Digital, CAN",
       "Time Private: inclui também o tipo MBZ",
       "Máquina de Vendas Digital e CAN Fechamento: crédito ao solicitante da intranet",
       "Demais tipos: crédito ao consultor participante",
@@ -268,7 +314,33 @@
       "Peso no score: 30% (padrão) e 40% (Time Private)",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0021", "CDV-0023"]
+    "related": [
+      "CDV-0023",
+      "CDV-0021"
+    ],
+    "history": [
+      {
+        "savedAt": "2026-04-08T12:00:00.000Z",
+        "title": "KPI de Reuniões Iniciais de Soluções Complementares",
+        "status": "ativa",
+        "summary": "Contabiliza reuniões de valor realizadas com clientes da base, nos tipos elegíveis de Soluções Complementares.",
+        "definition": "Uma reunião de Soluções Complementares é contabilizada quando concluída com status de realizada. Os tipos válidos são PP R1, Máquina de Vendas Digital, CAN Fechamento e, para o Time Private, também o tipo MBZ. Reuniões dos tipos Máquina de Vendas Digital e CAN Fechamento creditam ao consultor solicitante registrado na intranet. Os demais tipos creditam ao consultor participante da reunião. A meta mensal padrão é de 3 reuniões por consultor. A pontuação é escalonada — ver [[CDV-0023]].",
+        "criteria": [
+          "Reunião com status concluída",
+          "Tipos válidos: PP R1, Máquina de Vendas Digital, CAN Fechamento",
+          "Time Private: inclui também o tipo MBZ",
+          "Máquina de Vendas Digital e CAN Fechamento: crédito ao solicitante da intranet",
+          "Demais tipos: crédito ao consultor participante",
+          "Meta mensal padrão: 3 reuniões",
+          "Peso no score: 30% (padrão) e 40% (Time Private)",
+          "Apuração: mensal e semestral"
+        ],
+        "related": [
+          "CDV-0021",
+          "CDV-0023"
+        ]
+      }
+    ]
   },
   {
     "id": "CDV-0017",
@@ -286,7 +358,10 @@
       "Peso no score: 20%",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0021", "CDV-0023"]
+    "related": [
+      "CDV-0021",
+      "CDV-0023"
+    ]
   },
   {
     "id": "CDV-0018",
@@ -305,7 +380,10 @@
       "Peso no score: 10%",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0021", "CDV-0023"]
+    "related": [
+      "CDV-0021",
+      "CDV-0023"
+    ]
   },
   {
     "id": "CDV-0019",
@@ -323,7 +401,11 @@
       "Peso mensal liderança: 0,5%",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0020", "CDV-0021", "CDV-0024"]
+    "related": [
+      "CDV-0020",
+      "CDV-0021",
+      "CDV-0024"
+    ]
   },
   {
     "id": "CDV-0020",
@@ -342,7 +424,11 @@
       "Peso mensal liderança: 1,5%",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0019", "CDV-0021", "CDV-0024"]
+    "related": [
+      "CDV-0019",
+      "CDV-0021",
+      "CDV-0024"
+    ]
   },
   {
     "id": "CDV-0021",
@@ -360,7 +446,17 @@
       "Visão semestral: volume normalizado pelo número de meses ativos no semestre",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0015", "CDV-0016", "CDV-0017", "CDV-0018", "CDV-0019", "CDV-0020", "CDV-0022", "CDV-0023", "CDV-0024"]
+    "related": [
+      "CDV-0015",
+      "CDV-0016",
+      "CDV-0017",
+      "CDV-0018",
+      "CDV-0019",
+      "CDV-0020",
+      "CDV-0022",
+      "CDV-0023",
+      "CDV-0024"
+    ]
   },
   {
     "id": "CDV-0022",
@@ -378,7 +474,10 @@
       "Pesos dos KPIs aceleradores são diferentes na visão de liderança: Apólices 0,5%, CAN 1,5%",
       "Apuração: mensal e semestral"
     ],
-    "related": ["CDV-0021", "CDV-0023"]
+    "related": [
+      "CDV-0021",
+      "CDV-0023"
+    ]
   },
   {
     "id": "CDV-0023",
@@ -395,7 +494,16 @@
       "Apólices e CAN somam valor bruto diretamente, sem escalonamento",
       "Na visão semestral, o volume dos KPIs de quantidade é normalizado pelo número de meses ativos antes de entrar na tabela"
     ],
-    "related": ["CDV-0015", "CDV-0016", "CDV-0017", "CDV-0018", "CDV-0019", "CDV-0020", "CDV-0021", "CDV-0024"]
+    "related": [
+      "CDV-0015",
+      "CDV-0016",
+      "CDV-0017",
+      "CDV-0018",
+      "CDV-0019",
+      "CDV-0020",
+      "CDV-0021",
+      "CDV-0024"
+    ]
   },
   {
     "id": "CDV-0024",
@@ -414,7 +522,10 @@
       "Aceleradores liderança: Apólices 0,5%, CAN 1,5%",
       "O percentual final pode ser negativo caso Captação e Churn penalizem mais do que os demais KPIs entregam"
     ],
-    "related": ["CDV-0021", "CDV-0023"]
+    "related": [
+      "CDV-0021",
+      "CDV-0023"
+    ]
   },
   {
     "id": "CDV-0025",
@@ -430,7 +541,10 @@
       "Valor baseado no faturamento bruto da transação aprovada",
       "Responsável pelo acompanhamento: líder do time"
     ],
-    "related": ["CDV-0007", "CDV-0026"]
+    "related": [
+      "CDV-0007",
+      "CDV-0026"
+    ]
   },
   {
     "id": "CDV-0026",
@@ -446,7 +560,10 @@
       "Valor baseado na soma das transações associadas ao negócio de renovação",
       "Responsável pelo acompanhamento: líder do time"
     ],
-    "related": ["CDV-0010", "CDV-0025"]
+    "related": [
+      "CDV-0010",
+      "CDV-0025"
+    ]
   },
   {
     "id": "CDV-0027",
@@ -464,7 +581,10 @@
       "Clientes sem patrimônio registrado são classificados como 250K por padrão",
       "Faixas: 250K (< R$250k), +250K (250k–500k), +500K (500k–1MM), +1MM (1MM–5MM), +5MM (5MM–10MM), +10MM (> 10MM)"
     ],
-    "related": ["CDV-0030", "CDV-0031"]
+    "related": [
+      "CDV-0030",
+      "CDV-0031"
+    ]
   },
   {
     "id": "CDV-0028",
@@ -496,7 +616,10 @@
       "Pilot → data de entrada na etapa Contrato assinado do pipeline Wealth Pilot",
       "WIC → data de entrada na etapa Contrato assinado do pipeline Wealth Pilot"
     ],
-    "related": ["CDV-0032", "CDV-0033"]
+    "related": [
+      "CDV-0032",
+      "CDV-0033"
+    ]
   },
   {
     "id": "CDV-0030",
@@ -511,7 +634,10 @@
       "O desconto é fruto de um acordo individual na contratação",
       "Quando presente, o cliente é cobrado por uma tabela de faixa inferior à padrão para seu patrimônio"
     ],
-    "related": ["CDV-0027", "CDV-0031"]
+    "related": [
+      "CDV-0027",
+      "CDV-0031"
+    ]
   },
   {
     "id": "CDV-0031",
@@ -528,7 +654,10 @@
       "O fee é expresso como percentual anual sobre o patrimônio investido",
       "Clientes com desconto de faixa podem estar em uma tabela de faixa inferior à do seu patrimônio real"
     ],
-    "related": ["CDV-0027", "CDV-0030"]
+    "related": [
+      "CDV-0027",
+      "CDV-0030"
+    ]
   },
   {
     "id": "CDV-0032",
@@ -542,7 +671,10 @@
       "Registra a data da troca mais recente de assessor responsável",
       "Utilizada como referência para calcular o período de onboarding com o novo assessor (6 meses a partir da data de contrato)"
     ],
-    "related": ["CDV-0029", "CDV-0033"]
+    "related": [
+      "CDV-0029",
+      "CDV-0033"
+    ]
   },
   {
     "id": "CDV-0033",
@@ -563,7 +695,12 @@
       "Coberto = status Em dia ou Marcar",
       "Descoberto = status Marcado, Atrasado ou Sem registro"
     ],
-    "related": ["CDV-0001", "CDV-0002", "CDV-0029", "CDV-0032"]
+    "related": [
+      "CDV-0001",
+      "CDV-0002",
+      "CDV-0029",
+      "CDV-0032"
+    ]
   },
   {
     "id": "CDV-0034",
