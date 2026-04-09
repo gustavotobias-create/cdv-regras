@@ -343,7 +343,7 @@
     "title": "Probabilidade de Renovação do Contrato Oneshot",
     "status": "ativa",
     "createdAt": "2026-04-08T12:00:00.000Z",
-    "updatedAt": "2026-04-09T16:54:16.712Z",
+    "updatedAt": "2026-04-09T16:54:53.329Z",
     "summary": "A probabilidade de renovação é uma avaliação qualitativa do consultor sobre as chances de o cliente renovar o contrato, registrada no negócio de renovação.",
     "definition": "A probabilidade de renovação é definida pelo consultor responsável pelo cliente e registrada no negócio de renovação (ver [[CDV-0010]]) quando este avança da etapa de Análise Pendente. Os valores possíveis são Baixo, Médio e Alto. Com base no histórico de renovações fechadas nos últimos dois meses, o sistema calcula automaticamente uma taxa de conversão por faixa de probabilidade, permitindo estimar quantas renovações em andamento devem ser concluídas com sucesso.",
     "criteria": [
@@ -357,8 +357,7 @@
       "CDV-0011"
     ],
     "tags": [
-      "churn",
-      "tchunflay"
+      "churn"
     ],
     "history": [
       {
@@ -378,6 +377,27 @@
           "CDV-0011"
         ],
         "tags": []
+      },
+      {
+        "savedAt": "2026-04-09T16:54:16.712Z",
+        "title": "Probabilidade de Renovação do Contrato Oneshot",
+        "status": "ativa",
+        "summary": "A probabilidade de renovação é uma avaliação qualitativa do consultor sobre as chances de o cliente renovar o contrato, registrada no negócio de renovação.",
+        "definition": "A probabilidade de renovação é definida pelo consultor responsável pelo cliente e registrada no negócio de renovação (ver [[CDV-0010]]) quando este avança da etapa de Análise Pendente. Os valores possíveis são Baixo, Médio e Alto. Com base no histórico de renovações fechadas nos últimos dois meses, o sistema calcula automaticamente uma taxa de conversão por faixa de probabilidade, permitindo estimar quantas renovações em andamento devem ser concluídas com sucesso.",
+        "criteria": [
+          "Valores possíveis: Baixo, Médio e Alto",
+          "Definida pelo consultor responsável pelo cliente",
+          "Registrada quando o negócio avança da etapa de Análise Pendente",
+          "O sistema calcula a taxa de conversão histórica por faixa de probabilidade com base nos últimos dois meses"
+        ],
+        "related": [
+          "CDV-0010",
+          "CDV-0011"
+        ],
+        "tags": [
+          "churn",
+          "tchunflay"
+        ]
       }
     ]
   },
