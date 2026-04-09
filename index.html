@@ -332,18 +332,30 @@
   .tag-chip-rule{background:var(--blue-pale);color:var(--blue);border-color:var(--blue-border);}
   .tag-filter-bar{padding:6px 12px 8px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--border);}
   .tag-filter-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gray-400);margin-bottom:2px;}
-  .tag-filter-chips{display:flex;flex-wrap:wrap;gap:4px;}
-  /* TAG INPUT */
-  .tag-input-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-height:36px;border:1px solid var(--border);border-radius:7px;padding:5px 8px;background:#fff;cursor:text;transition:border-color .15s;}
-  .tag-input-wrap:focus-within{border-color:var(--blue);}
   .tag-pill{display:inline-flex;align-items:center;gap:3px;background:var(--blue-pale);color:var(--blue);border:1px solid var(--blue-border);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:600;}
   .tag-pill-rm{cursor:pointer;font-size:10px;opacity:.6;margin-left:2px;}
   .tag-pill-rm:hover{opacity:1;}
-  .tag-text-input{border:none;outline:none;font-size:12.5px;font-family:var(--font);min-width:100px;background:transparent;color:var(--gray-900);}
-  .tag-suggestions{position:absolute;z-index:999;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);max-height:160px;overflow-y:auto;min-width:180px;}
-  .tag-sug-item{padding:7px 12px;font-size:12.5px;cursor:pointer;transition:background .1s;}
-  .tag-sug-item:hover,.tag-sug-item.sel{background:var(--blue-pale);color:var(--blue);}
-  .tag-sug-new{font-style:italic;color:var(--green);}
+  /* CUSTOM TAG DROPDOWN */
+  .tsd-wrap{position:relative;}
+  .tsd-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--border);border-radius:7px;padding:7px 12px;background:#fff;cursor:pointer;min-height:38px;transition:border-color .15s;user-select:none;}
+  .tsd-trigger:hover,.tsd-trigger.open{border-color:var(--blue);}
+  .tsd-trigger-label{font-size:12.5px;color:var(--gray-400);flex:1;display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
+  .tsd-trigger-label.has-sel{color:var(--gray-900);}
+  .tsd-arrow{font-size:10px;color:var(--gray-400);flex-shrink:0;transition:transform .15s;}
+  .tsd-trigger.open .tsd-arrow{transform:rotate(180deg);}
+  .tsd-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:500;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);overflow:hidden;}
+  .tsd-search-wrap{padding:8px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;background:var(--gray-50);}
+  .tsd-search-icon{color:var(--gray-400);font-size:12px;flex-shrink:0;}
+  .tsd-search-input{border:none;outline:none;font-size:12.5px;font-family:var(--font);background:transparent;color:var(--gray-900);width:100%;}
+  .tsd-options{max-height:180px;overflow-y:auto;}
+  .tsd-option{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;transition:background .1s;font-size:13px;}
+  .tsd-option:hover{background:var(--blue-pale);}
+  .tsd-option.checked{background:var(--blue-pale);color:var(--blue);font-weight:600;}
+  .tsd-checkbox{width:16px;height:16px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .12s;}
+  .tsd-option.checked .tsd-checkbox{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .tsd-create{padding:8px 12px;font-size:12.5px;color:var(--green);font-weight:600;cursor:pointer;border-top:1px solid var(--border);background:var(--gray-50);}
+  .tsd-create:hover{background:#e6f7ee;}
+  .tsd-empty{padding:10px 12px;font-size:12.5px;color:var(--gray-400);text-align:center;}
 
   /* SYNC STATUS */
   .sync-toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);z-index:2000;display:flex;align-items:center;gap:8px;transition:opacity .3s;opacity:0;pointer-events:none;}
@@ -439,11 +451,20 @@
       <div class="form-group"><label class="form-label">Regras Relacionadas (códigos por vírgula)</label><input class="form-input" id="fRelated" placeholder="ex: CDV-0001, CDV-0002"></div>
       <div class="form-group">
         <label class="form-label">Tags</label>
-        <select id="tagMultiSelect" multiple style="width:100%;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);padding:4px;min-height:80px;max-height:140px;outline:none;color:var(--gray-900)" onchange="onTagSelectChange()"></select>
-        <div style="margin-top:8px;display:flex;gap:6px;align-items:center">
-          <input id="tagTextInput" class="form-input" placeholder="Criar nova tag e pressionar Enter…" autocomplete="off" style="flex:1;font-size:12.5px" onkeydown="onTagKey(event)">
+        <div class="tsd-wrap" id="tsdWrap">
+          <div class="tsd-trigger" id="tsdTrigger" onclick="toggleTsd()">
+            <div class="tsd-trigger-label" id="tsdTriggerLabel">Selecionar tags…</div>
+            <span class="tsd-arrow">▼</span>
+          </div>
+          <div class="tsd-dropdown" id="tsdDropdown" style="display:none">
+            <div class="tsd-search-wrap">
+              <span class="tsd-search-icon">🔍</span>
+              <input class="tsd-search-input" id="tsdSearch" placeholder="Pesquisar tag…" autocomplete="off" oninput="renderTsdOptions()" onkeydown="onTsdSearchKey(event)">
+            </div>
+            <div class="tsd-options" id="tsdOptions"></div>
+            <div class="tsd-create" id="tsdCreate" style="display:none" onmousedown="tsdCreateTag()"></div>
+          </div>
         </div>
-        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px" id="tagPills"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -682,37 +703,40 @@ function filterTag(t){
   activeTag=t||null;
   renderTagFilter();renderList();if(!activeTabId)renderHome();
 }
-// form tag input
-function renderTagPills(){
-  // sync multi-select options
-  const sel=document.getElementById('tagMultiSelect');
-  if(!sel) return;
+// ── CUSTOM TAG DROPDOWN ──
+function toggleTsd(){
+  const dd=document.getElementById('tsdDropdown');
+  const tr=document.getElementById('tsdTrigger');
+  const open=dd.style.display!=='none';
+  if(open){dd.style.display='none';tr.classList.remove('open');}
+  else{dd.style.display='';tr.classList.add('open');renderTsdOptions();setTimeout(()=>document.getElementById('tsdSearch').focus(),50);}
+}
+function renderTsdOptions(){
+  const qEl=document.getElementById('tsdSearch');if(!qEl)return;
+  const q=qEl.value.toLowerCase();
   const allTags=[...new Set([...getAllTags(),..._formTags])].sort();
-  sel.innerHTML=allTags.map(t=>`<option value="${t}"${_formTags.includes(t)?' selected':''}>${t}</option>`).join('');
-  // show selected as pills below
-  document.getElementById('tagPills').innerHTML=_formTags.map((t,i)=>`<span class="tag-pill">${t}<span class="tag-pill-rm" onclick="removeFormTag(${i})">✕</span></span>`).join('');
+  const filtered=q?allTags.filter(t=>t.toLowerCase().includes(q)):allTags;
+  const opts=document.getElementById('tsdOptions');
+  opts.innerHTML=filtered.length?filtered.map(t=>`<div class="tsd-option${_formTags.includes(t)?' checked':''}" onmousedown="tsdToggle('${t}')"><div class="tsd-checkbox">${_formTags.includes(t)?'✓':''}</div>${t}</div>`).join(''):`<div class="tsd-empty">${q?'Nenhuma tag encontrada.':'Nenhuma tag ainda.'}</div>`;
+  const cr=document.getElementById('tsdCreate');
+  const exact=allTags.some(t=>t.toLowerCase()===q);
+  if(q&&q.length>1&&!exact){cr.style.display='';cr.textContent=`+ Criar "${qEl.value.trim()}"`;}
+  else cr.style.display='none';
+  // update trigger label
+  const lbl=document.getElementById('tsdTriggerLabel');
+  if(_formTags.length){lbl.classList.add('has-sel');lbl.innerHTML=_formTags.map((t,i)=>`<span class="tag-pill" style="font-size:10px">${t}<span class="tag-pill-rm" onmousedown="event.stopPropagation();tsdRemove(${i})">✕</span></span>`).join('');}
+  else{lbl.classList.remove('has-sel');lbl.innerHTML='Selecionar tags…';}
 }
-function removeFormTag(i){_formTags.splice(i,1);renderTagPills();}
-function onTagSelectChange(){
-  const sel=document.getElementById('tagMultiSelect');
-  _formTags=[...sel.selectedOptions].map(o=>o.value);
-  renderTagPills();
-}
-function onTagInput(){}
-function addFormTag(t,create=false){
-  const tag=create?t.trim():t;
-  if(tag&&!_formTags.includes(tag)){_formTags.push(tag);renderTagPills();}
-  document.getElementById('tagTextInput').value='';
-  document.getElementById('tagSuggestions').style.display='none';
-}
-function onTagKey(e){
-  if(e.key==='Enter'||e.key===','||e.key===';'){
-    e.preventDefault();
-    const inp=document.getElementById('tagTextInput');
-    const val=inp.value.trim().replace(/[,;]/g,'');
-    if(val){addFormTag(val,true);inp.value='';}
-  }
-}
+function tsdToggle(t){const idx=_formTags.indexOf(t);if(idx===-1)_formTags.push(t);else _formTags.splice(idx,1);renderTsdOptions();}
+function tsdRemove(i){_formTags.splice(i,1);renderTsdOptions();}
+function tsdCreateTag(){const q=document.getElementById('tsdSearch').value.trim();if(q&&!_formTags.includes(q)){_formTags.push(q);}document.getElementById('tsdSearch').value='';renderTsdOptions();}
+function onTsdSearchKey(e){if(e.key==='Enter'){e.preventDefault();tsdCreateTag();}}
+function addFormTag(t){if(t&&!_formTags.includes(t)){_formTags.push(t);renderTsdOptions();}}
+function renderTagPills(){renderTsdOptions();}
+document.addEventListener('click',e=>{
+  const wrap=document.getElementById('tsdWrap');
+  if(wrap&&!wrap.contains(e.target)){document.getElementById('tsdDropdown').style.display='none';document.getElementById('tsdTrigger').classList.remove('open');}
+});
 
 // ── SIDEBAR ──
 function renderList(){
@@ -741,13 +765,13 @@ function renderList(){
       if((r.criteria||[]).some(c=>c.toLowerCase().includes(t))) hits.push('critérios');
       if(hits.length) hitLabel=`<div style="font-size:10px;color:var(--blue);margin-top:4px">🔍 em: ${hits.join(' · ')}</div>`;
     }
-    const tagHtml=(r.tags||[]).length?`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:5px">${(r.tags||[]).map(t=>`<span class="tag-chip tag-chip-rule" style="font-size:10px;padding:1px 7px">${t}</span>`).join('')}</div>`:'';
+    const tagHtml=(r.tags||[]).length?`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px">${(r.tags||[]).map(t=>`<span class="tag-chip tag-chip-rule" style="font-size:10px;padding:1px 7px">${t}</span>`).join('')}</div>`:'';
     return`<div class="rule-item ${activeTabId===r.id?'active':''}" onclick="openRule('${r.id}')">
-      <div class="rule-item-code">${r.id}</div>
-      <div class="rule-item-title">${hl(r.title,globalTerm)}</div>
-      <div class="rule-item-badges">
-        <span class="badge ${r.status||'ativa'}">${r.status==='inativa'?'Inativa':'Ativa'}</span>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:2px">
+        <div class="rule-item-code">${r.id}</div>
+        <span class="badge ${r.status||'ativa'}" style="font-size:9px;padding:1px 7px">${r.status==='inativa'?'Inativa':'Ativa'}</span>
       </div>
+      <div class="rule-item-title">${hl(r.title,globalTerm)}</div>
       ${tagHtml}
       ${hitLabel}
     </div>`;
@@ -1074,7 +1098,7 @@ function closeModal(){ document.getElementById('modalOverlay').classList.remove(
 function overlayClick(e){ if(e.target===document.getElementById('modalOverlay'))closeModal(); }
 function clearForm(){
   ['fTitle','fSummary','fDefinition','fCriteria','fRelated'].forEach(i=>document.getElementById(i).value='');
-  _formTags=[];renderTagPills();
+  _formTags=[];renderTsdOptions&&renderTsdOptions();
   document.getElementById('fStatus').value='ativa';
   document.getElementById('fPrefix').value='WS';
 }
@@ -1107,7 +1131,7 @@ function editRule(id){
   document.getElementById('fStatus').value=rule.status||'ativa';
   document.getElementById('fSummary').value=rule.summary;document.getElementById('fDefinition').value=rule.definition;
   document.getElementById('fCriteria').value=(rule.criteria||[]).join('\n');document.getElementById('fRelated').value=(rule.related||[]).join(', ');
-  _formTags=[...(rule.tags||[])];renderTagPills();
+  _formTags=[...(rule.tags||[])];renderTsdOptions&&renderTsdOptions();
   document.getElementById('modalTitle').textContent='Editar — '+rule.id;
   document.getElementById('modalDeleteBtn').style.display='';
   document.getElementById('modalSaveBtn').onclick=()=>updateRule(id);
