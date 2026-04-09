@@ -297,7 +297,7 @@
     "title": "Status de Renovação do Contrato Oneshot",
     "status": "ativa",
     "createdAt": "2026-04-08T12:00:00.000Z",
-    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-09T16:53:58.359Z",
     "summary": "O status de renovação indica em que momento do ciclo de recontratação o cliente se encontra: Em andamento, Renovado ou Perdido.",
     "definition": "Todo cliente Oneshot com negócio aberto no pipeline de renovação (ver [[CDV-0010]]) recebe um dos três status: Em andamento quando o negócio ainda está em aberto, Renovado quando o contrato foi fechado com sucesso, e Perdido quando a renovação foi recusada. Existe ainda um indicador complementar de prazo vencido, que sinaliza clientes cujo prazo de renovação já passou mas o negócio ainda não foi encerrado no sistema. Esse indicador serve como alerta para a gestão agir antes que o cliente fique sem contrato ativo.",
     "criteria": [
@@ -311,6 +311,31 @@
       "CDV-0010",
       "CDV-0012",
       "CDV-0014"
+    ],
+    "tags": [
+      "churn"
+    ],
+    "history": [
+      {
+        "savedAt": "2026-04-08T12:00:00.000Z",
+        "title": "Status de Renovação do Contrato Oneshot",
+        "status": "ativa",
+        "summary": "O status de renovação indica em que momento do ciclo de recontratação o cliente se encontra: Em andamento, Renovado ou Perdido.",
+        "definition": "Todo cliente Oneshot com negócio aberto no pipeline de renovação (ver [[CDV-0010]]) recebe um dos três status: Em andamento quando o negócio ainda está em aberto, Renovado quando o contrato foi fechado com sucesso, e Perdido quando a renovação foi recusada. Existe ainda um indicador complementar de prazo vencido, que sinaliza clientes cujo prazo de renovação já passou mas o negócio ainda não foi encerrado no sistema. Esse indicador serve como alerta para a gestão agir antes que o cliente fique sem contrato ativo.",
+        "criteria": [
+          "Em andamento: negócio aberto no pipeline de renovação",
+          "Renovado: negócio fechado com sucesso",
+          "Perdido: renovação recusada pelo cliente",
+          "Prazo vencido: prazo de renovação ultrapassado com negócio ainda em aberto",
+          "O status é atualizado conforme o avanço do negócio no pipeline"
+        ],
+        "related": [
+          "CDV-0010",
+          "CDV-0012",
+          "CDV-0014"
+        ],
+        "tags": []
+      }
     ]
   },
   {
