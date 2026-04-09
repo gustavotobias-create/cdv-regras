@@ -437,14 +437,13 @@
       </div>
       <div class="form-group"><label class="form-label">Critérios / Checklist (uma linha por item)</label><textarea class="form-textarea" id="fCriteria" placeholder="Patrimônio mínimo: R$ 300k&#10;Suitability obrigatório"></textarea></div>
       <div class="form-group"><label class="form-label">Regras Relacionadas (códigos por vírgula)</label><input class="form-input" id="fRelated" placeholder="ex: CDV-0001, CDV-0002"></div>
-      <div class="form-group" style="position:relative">
+      <div class="form-group">
         <label class="form-label">Tags</label>
-        <div id="tagExistingChips" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px"></div>
-        <div class="tag-input-wrap" id="tagInputWrap" onclick="document.getElementById('tagTextInput').focus()">
-          <div id="tagPills"></div>
-          <input id="tagTextInput" class="tag-text-input" placeholder="Criar nova tag e pressione Enter…" autocomplete="off" oninput="onTagInput()" onkeydown="onTagKey(event)">
+        <select id="tagMultiSelect" multiple style="width:100%;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);padding:4px;min-height:80px;max-height:140px;outline:none;color:var(--gray-900)" onchange="onTagSelectChange()"></select>
+        <div style="margin-top:8px;display:flex;gap:6px;align-items:center">
+          <input id="tagTextInput" class="form-input" placeholder="Criar nova tag e pressionar Enter…" autocomplete="off" style="flex:1;font-size:12.5px" onkeydown="onTagKey(event)">
         </div>
-        <div class="tag-suggestions" id="tagSuggestions" style="display:none"></div>
+        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px" id="tagPills"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -685,28 +684,21 @@ function filterTag(t){
 }
 // form tag input
 function renderTagPills(){
+  // sync multi-select options
+  const sel=document.getElementById('tagMultiSelect');
+  if(!sel) return;
+  const allTags=[...new Set([...getAllTags(),..._formTags])].sort();
+  sel.innerHTML=allTags.map(t=>`<option value="${t}"${_formTags.includes(t)?' selected':''}>${t}</option>`).join('');
+  // show selected as pills below
   document.getElementById('tagPills').innerHTML=_formTags.map((t,i)=>`<span class="tag-pill">${t}<span class="tag-pill-rm" onclick="removeFormTag(${i})">✕</span></span>`).join('');
-  // show existing tags not yet selected as clickable chips
-  const existing=getAllTags().filter(t=>!_formTags.includes(t));
-  const ec=document.getElementById('tagExistingChips');
-  if(!ec) return;
-  if(!existing.length){ec.style.display='none';return;}
-  ec.style.display='flex';
-  ec.innerHTML=existing.map(t=>`<span class="tag-chip tag-chip-filter" style="cursor:pointer" onclick="addFormTag('${t}')" title="Adicionar tag '${t}'">${t}</span>`).join('');
 }
 function removeFormTag(i){_formTags.splice(i,1);renderTagPills();}
-function onTagInput(){
-  const val=document.getElementById('tagTextInput').value.trim();
-  const sug=document.getElementById('tagSuggestions');
-  if(!val){sug.style.display='none';return;}
-  const vl=val.toLowerCase();
-  const existing=getAllTags().filter(t=>!_formTags.includes(t)&&t.toLowerCase().includes(vl));
-  const exactExists=getAllTags().map(t=>t.toLowerCase()).includes(vl)||_formTags.map(t=>t.toLowerCase()).includes(vl);
-  const items=[...existing.map(t=>`<div class="tag-sug-item" onmousedown="addFormTag('${t}')">${t}</div>`),
-    ...(!exactExists&&val.length>1?[`<div class="tag-sug-item tag-sug-new" onmousedown="addFormTag('${val}',true)">+ Criar "${val}"</div>`]:[])];
-  if(!items.length){sug.style.display='none';return;}
-  sug.innerHTML=items.join('');sug.style.display='';
+function onTagSelectChange(){
+  const sel=document.getElementById('tagMultiSelect');
+  _formTags=[...sel.selectedOptions].map(o=>o.value);
+  renderTagPills();
 }
+function onTagInput(){}
 function addFormTag(t,create=false){
   const tag=create?t.trim():t;
   if(tag&&!_formTags.includes(tag)){_formTags.push(tag);renderTagPills();}
@@ -716,15 +708,11 @@ function addFormTag(t,create=false){
 function onTagKey(e){
   if(e.key==='Enter'||e.key===','||e.key===';'){
     e.preventDefault();
-    const val=document.getElementById('tagTextInput').value.trim().replace(/,|;/g,'');
-    if(val)addFormTag(val,true);
-  } else if(e.key==='Backspace'&&!document.getElementById('tagTextInput').value&&_formTags.length){
-    _formTags.pop();renderTagPills();
-  } else if(e.key==='Escape'){
-    document.getElementById('tagSuggestions').style.display='none';
+    const inp=document.getElementById('tagTextInput');
+    const val=inp.value.trim().replace(/[,;]/g,'');
+    if(val){addFormTag(val,true);inp.value='';}
   }
 }
-document.addEventListener('click',e=>{if(!e.target.closest('#tagInputWrap')&&!e.target.closest('#tagSuggestions'))document.getElementById('tagSuggestions').style.display='none';});
 
 // ── SIDEBAR ──
 function renderList(){
@@ -893,15 +881,13 @@ function renderContent(){
   area.innerHTML=`
     <div class="rule-detail">
       <div class="rule-header">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <span class="rule-code-badge">${rule.id}</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <span class="rule-code-badge">${rule.id}</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
             <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;${rule.status==='inativa'?'background:var(--gray-100);color:var(--gray-500);border:1px solid var(--gray-200)':'background:var(--green-pale);color:var(--green);border:1px solid var(--green-border)'}">
               <span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block"></span>
               ${rule.status==='inativa'?'Inativa':'Ativa'}
             </span>
-          </div>
-          <div class="rule-actions" style="float:none;flex-shrink:0">
             <div class="btn-icon" title="Editar regra" onclick="editRule('${rule.id}')">✏️</div>
             ${(rule.history||[]).length?`<div class="btn-icon" title="Ver histórico de versões" onclick="openHistory('${rule.id}')">🕐</div>`:''}
             <div class="btn-icon" title="Voltar à tabela geral" onclick="goHome()">⊞</div>
