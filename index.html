@@ -378,7 +378,9 @@
   <aside class="sidebar" id="sidebar">
     <div class="tag-filter-bar" id="tagFilterBar" style="display:none">
       <div class="tag-filter-label">Filtrar por tag</div>
-      <div class="tag-filter-chips" id="tagFilterChips"></div>
+      <select class="form-select" id="tagFilterSelect" onchange="filterTag(this.value)" style="font-size:12px;padding:4px 8px;height:30px">
+        <option value="">Todas as tags</option>
+      </select>
     </div>
     <div class="rules-list" id="rulesList"></div>
     <div class="drag-handle" id="dragHandle" title="Arrastar para redimensionar"></div>
@@ -437,10 +439,10 @@
       <div class="form-group"><label class="form-label">Regras Relacionadas (códigos por vírgula)</label><input class="form-input" id="fRelated" placeholder="ex: CDV-0001, CDV-0002"></div>
       <div class="form-group" style="position:relative">
         <label class="form-label">Tags</label>
-        <div class="form-hint">Clique nas tags existentes ou digite para criar uma nova e pressione Enter</div>
+        <div id="tagExistingChips" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px"></div>
         <div class="tag-input-wrap" id="tagInputWrap" onclick="document.getElementById('tagTextInput').focus()">
           <div id="tagPills"></div>
-          <input id="tagTextInput" class="tag-text-input" placeholder="Adicionar tag…" autocomplete="off" oninput="onTagInput()" onkeydown="onTagKey(event)">
+          <input id="tagTextInput" class="tag-text-input" placeholder="Criar nova tag e pressione Enter…" autocomplete="off" oninput="onTagInput()" onkeydown="onTagKey(event)">
         </div>
         <div class="tag-suggestions" id="tagSuggestions" style="display:none"></div>
       </div>
@@ -672,29 +674,36 @@ function getAllTags(){
 function renderTagFilter(){
   const tags=getAllTags();
   const bar=document.getElementById('tagFilterBar');
-  const chips=document.getElementById('tagFilterChips');
-  if(!tags.length){bar.style.display='none';return;}
+  const sel=document.getElementById('tagFilterSelect');
+  if(!tags.length){bar.style.display='none';activeTag=null;return;}
   bar.style.display='';
-  chips.innerHTML=tags.map(t=>`<span class="tag-chip tag-chip-filter${activeTag===t?' sel':''}" onclick="filterTag('${t}')">${t}</span>`).join('');
+  sel.innerHTML='<option value="">Todas as tags</option>'+tags.map(t=>`<option value="${t}"${activeTag===t?' selected':''}>${t}</option>`).join('');
 }
 function filterTag(t){
-  activeTag=activeTag===t?null:t;
+  activeTag=t||null;
   renderTagFilter();renderList();if(!activeTabId)renderHome();
 }
 // form tag input
 function renderTagPills(){
-  const wrap=document.getElementById('tagPills');
-  wrap.innerHTML=_formTags.map((t,i)=>`<span class="tag-pill">${t}<span class="tag-pill-rm" onclick="removeFormTag(${i})">✕</span></span>`).join('');
+  document.getElementById('tagPills').innerHTML=_formTags.map((t,i)=>`<span class="tag-pill">${t}<span class="tag-pill-rm" onclick="removeFormTag(${i})">✕</span></span>`).join('');
+  // show existing tags not yet selected as clickable chips
+  const existing=getAllTags().filter(t=>!_formTags.includes(t));
+  const ec=document.getElementById('tagExistingChips');
+  if(!ec) return;
+  if(!existing.length){ec.style.display='none';return;}
+  ec.style.display='flex';
+  ec.innerHTML=existing.map(t=>`<span class="tag-chip tag-chip-filter" style="cursor:pointer" onclick="addFormTag('${t}')" title="Adicionar tag '${t}'">${t}</span>`).join('');
 }
 function removeFormTag(i){_formTags.splice(i,1);renderTagPills();}
 function onTagInput(){
-  const val=document.getElementById('tagTextInput').value.trim().toLowerCase();
+  const val=document.getElementById('tagTextInput').value.trim();
   const sug=document.getElementById('tagSuggestions');
-  const existing=getAllTags().filter(t=>!_formTags.includes(t)&&t.toLowerCase().includes(val));
-  const canCreate=val.length>1&&!getAllTags().map(t=>t.toLowerCase()).includes(val)&&!_formTags.map(t=>t.toLowerCase()).includes(val);
-  if(!val&&!existing.length){sug.style.display='none';return;}
-  const items=[...existing.map((t,i)=>`<div class="tag-sug-item" onmousedown="addFormTag('${t}')">${t}</div>`),
-    ...(canCreate?[`<div class="tag-sug-item tag-sug-new" onmousedown="addFormTag('${val}',true)">+ Criar "${val}"</div>`]:[])];
+  if(!val){sug.style.display='none';return;}
+  const vl=val.toLowerCase();
+  const existing=getAllTags().filter(t=>!_formTags.includes(t)&&t.toLowerCase().includes(vl));
+  const exactExists=getAllTags().map(t=>t.toLowerCase()).includes(vl)||_formTags.map(t=>t.toLowerCase()).includes(vl);
+  const items=[...existing.map(t=>`<div class="tag-sug-item" onmousedown="addFormTag('${t}')">${t}</div>`),
+    ...(!exactExists&&val.length>1?[`<div class="tag-sug-item tag-sug-new" onmousedown="addFormTag('${val}',true)">+ Criar "${val}"</div>`]:[])];
   if(!items.length){sug.style.display='none';return;}
   sug.innerHTML=items.join('');sug.style.display='';
 }
@@ -783,7 +792,7 @@ function renderHome(){
   }
   function rowVisible(r){
     if(!term) return true;
-    return [r.id,r.title,r.summary||'',r.definition||'',...(r.criteria||[])].some(s=>s.toLowerCase().includes(term));
+    return [r.id,r.title,r.summary||'',r.definition||'',...(r.criteria||[]),...(r.tags||[])].some(s=>s.toLowerCase().includes(term));
   }
   const matchCount=sorted.filter(rowVisible).length;
   area.innerHTML=`
@@ -805,7 +814,7 @@ function renderHome(){
             <th><button class="sort-btn" onclick="setSort('id')">Código <span class="sort-icon">${arr('id')}</span></button></th>
             <th><button class="sort-btn" onclick="setSort('title')">Nome / Resumo <span class="sort-icon">${arr('title')}</span></button></th>
             <th><button class="sort-btn" onclick="setSort('status')">Status <span class="sort-icon">${arr('status')}</span></button></th>
-            <th><button class="sort-btn" onclick="setSort('createdAt')">Criado em <span class="sort-icon">${arr('createdAt')}</span></button></th>
+            <th>Tags</th>
             <th><button class="sort-btn" onclick="setSort('updatedAt')">Última modificação <span class="sort-icon">${arr('updatedAt')}</span></button></th>
           </tr></thead>
           <tbody>${sorted.map(r=>{
@@ -814,7 +823,7 @@ function renderHome(){
               <td class="td-code">${hl(r.id,globalTerm)}</td>
               <td><div class="td-title">${hl(r.title,globalTerm)}</div><div class="td-desc">${hl(r.summary,globalTerm)}</div>${snippet(r)}</td>
               <td><span class="badge ${r.status||'ativa'}">${r.status==='inativa'?'Inativa':'Ativa'}</span></td>
-              <td style="font-size:12px;color:var(--gray-500);white-space:nowrap">${fmtDatetime(r.createdAt)}</td>
+              <td>${(()=>{const tags=r.tags||[];if(!tags.length)return'<span style="color:var(--gray-300);font-size:12px">—</span>';const show=tags.slice(0,2);const rest=tags.length-2;return`<div style="display:flex;flex-wrap:wrap;gap:3px;align-items:center">${show.map(t=>`<span class="tag-chip tag-chip-rule" style="font-size:10px;padding:1px 7px;cursor:pointer" onclick="event.stopPropagation();filterTag('${t}')">${t}</span>`).join('')}${rest>0?`<span style="font-size:10px;color:var(--gray-400);font-weight:600">+${rest}</span>`:''}</div>`;})()}</td>
               <td style="font-size:12px;color:var(--gray-500);white-space:nowrap">${fmtDatetime(r.updatedAt)}</td>
             </tr>`;
           }).join('')}
@@ -884,25 +893,27 @@ function renderContent(){
   area.innerHTML=`
     <div class="rule-detail">
       <div class="rule-header">
-        <div class="rule-actions">
-          <div class="btn-icon" title="Editar regra" onclick="editRule('${rule.id}')">✏️</div>
-          ${(rule.history||[]).length?`<div class="btn-icon" title="Ver histórico de versões" onclick="openHistory('${rule.id}')">🕐</div>`:''}
-          <div class="btn-icon" title="Voltar à tabela geral" onclick="goHome()">⊞</div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <span class="rule-code-badge">${rule.id}</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;${rule.status==='inativa'?'background:var(--gray-100);color:var(--gray-500);border:1px solid var(--gray-200)':'background:var(--green-pale);color:var(--green);border:1px solid var(--green-border)'}">
+              <span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block"></span>
+              ${rule.status==='inativa'?'Inativa':'Ativa'}
+            </span>
+          </div>
+          <div class="rule-actions" style="float:none;flex-shrink:0">
+            <div class="btn-icon" title="Editar regra" onclick="editRule('${rule.id}')">✏️</div>
+            ${(rule.history||[]).length?`<div class="btn-icon" title="Ver histórico de versões" onclick="openHistory('${rule.id}')">🕐</div>`:''}
+            <div class="btn-icon" title="Voltar à tabela geral" onclick="goHome()">⊞</div>
+          </div>
         </div>
-        <div class="rule-meta-line">
-          <span class="rule-code-badge">${rule.id}</span>
-          <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;${rule.status==='inativa'?'background:var(--gray-100);color:var(--gray-500);border:1px solid var(--gray-200)':'background:var(--green-pale);color:var(--green);border:1px solid var(--green-border)'}">
-            <span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block"></span>
-            ${rule.status==='inativa'?'Inativa':'Ativa'}
-          </span>
-        </div>
-        <div class="rule-title">${rule.title}</div>
+        <div class="rule-title" style="margin-top:10px">${rule.title}</div>
+        ${(rule.tags||[]).length?`<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;max-width:100%;overflow:hidden">${rule.tags.map(t=>`<span class="tag-chip tag-chip-rule" onclick="filterTag('${t}');goHome()" title="Filtrar por '${t}'">${t}</span>`).join('')}</div>`:''}
         ${rule.status==='inativa'?`<div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:13px;color:var(--gray-500)">⚠️ Esta regra está <strong style="color:var(--gray-700)">inativa</strong> e não está em vigor.</div>`:''}
         <div class="rule-owners">
           <span class="owner-tag">🕐 Criado em ${fmtDatetime(rule.createdAt)}</span>
           <span class="owner-tag">✏️ Modificado em ${fmtDatetime(rule.updatedAt)}</span>
         </div>
-        ${(rule.tags||[]).length?`<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px">${(rule.tags||[]).map(t=>`<span class="tag-chip tag-chip-rule" onclick="filterTag('${t}');goHome()" title="Filtrar por '${t}'">${t}</span>`).join('')}</div>`:''}
       </div>
       <div class="cards-grid">
         <div class="info-card full">
