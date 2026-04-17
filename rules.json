@@ -198,9 +198,9 @@
     "title": "Cobertura de Proteção Patrimonial",
     "status": "ativa",
     "createdAt": "2026-04-08T12:00:00.000Z",
-    "updatedAt": "2026-04-08T12:00:00.000Z",
+    "updatedAt": "2026-04-17T12:45:14.559Z",
     "summary": "Indica se o cliente já realizou sua reunião de Proteção Patrimonial e se isso ocorreu dentro do ciclo atual de 2026.",
-    "definition": "A Proteção Patrimonial é uma reunião estruturada com foco em revisão patrimonial mais aprofundada, diferente da reunião mensal de acompanhamento regular. São acompanhados dois indicadores: o primeiro indica se o cliente já realizou ao menos uma reunião de PP em qualquer momento do relacionamento com o CDV, podendo ser PP R1, R2 ou R3. O segundo indica se o cliente iniciou o ciclo de PP especificamente em 2026, ou seja, se já realizou a primeira reunião de PP a partir de janeiro deste ano. O percentual de cobertura de PP é calculado como o total de clientes que já fizeram PP dividido pelo total de clientes ativos da base.",
+    "definition": "A Proteção Patrimonial é uma reunião estruturada com foco em revisão patrimonial mais aprofundada, diferente da reunião mensal de acompanhamento regular. São acompanhados dois indicadores: o primeidwadnte já realizou ao menos uma reunião de PP em qualquer momento do relacionamento com o CDV, podendo ser PP R1, R2 ou R3. O segundo indica se o cliente iniciou o ciclo de PP especificamente em 2026, ou seja, se já realizou a primeira reunião de PP a partir de janeiro deste ano. O percentual de cobertura de PP é calculado como o total de clientes que já fizeram PP dividido pelo total de clientes ativos da base.",
     "criteria": [
       "PP histórica: ao menos uma reunião de PP concluída em qualquer data",
       "PP 2026: reunião PP R1 concluída a partir de 01/01/2026",
@@ -211,6 +211,28 @@
     "related": [
       "CDV-0001",
       "CDV-0003"
+    ],
+    "tags": [],
+    "history": [
+      {
+        "savedAt": "2026-04-08T12:00:00.000Z",
+        "title": "Cobertura de Proteção Patrimonial",
+        "status": "ativa",
+        "summary": "Indica se o cliente já realizou sua reunião de Proteção Patrimonial e se isso ocorreu dentro do ciclo atual de 2026.",
+        "definition": "A Proteção Patrimonial é uma reunião estruturada com foco em revisão patrimonial mais aprofundada, diferente da reunião mensal de acompanhamento regular. São acompanhados dois indicadores: o primeiro indica se o cliente já realizou ao menos uma reunião de PP em qualquer momento do relacionamento com o CDV, podendo ser PP R1, R2 ou R3. O segundo indica se o cliente iniciou o ciclo de PP especificamente em 2026, ou seja, se já realizou a primeira reunião de PP a partir de janeiro deste ano. O percentual de cobertura de PP é calculado como o total de clientes que já fizeram PP dividido pelo total de clientes ativos da base.",
+        "criteria": [
+          "PP histórica: ao menos uma reunião de PP concluída em qualquer data",
+          "PP 2026: reunião PP R1 concluída a partir de 01/01/2026",
+          "Tipos que qualificam: PP R1, PP R2, PP R3 e Proteção Patrimonial",
+          "A reunião precisa estar com status concluída",
+          "Percentual = clientes com PP realizada dividido pelo total de clientes ativos da base"
+        ],
+        "related": [
+          "CDV-0001",
+          "CDV-0003"
+        ],
+        "tags": []
+      }
     ]
   },
   {
