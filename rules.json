@@ -6,9 +6,9 @@
     "createdAt": "2026-04-08T12:00:00.000Z",
     "updatedAt": "2026-04-09T00:57:17.774Z",
     "summary": "Cliente coberto é aquele que teve ao menos uma reunião concluída dentro do prazo esperado de atendimento.",
-    "definition": "Um cliente é considerado coberto quando seu consultor realizou ao menos uma reunião com ele dentro do prazo esperado. O prazo padrão é de 29 dias. Após 6 meses de contrato, caso o cliente tenha uma frequência de atendimento individual definida, esse valor passa a valer no lugar do padrão. Qualquer tipo de reunião concluída conta para cobertura, seja ela de acompanhamento regular, Proteção Patrimonial ou institucional. Clientes em fase piloto e clientes que cancelaram o serviço na data de referência são excluídos desse controle. O consultor responsável pelo cliente na data de referência é quem responde pelo status de cobertura.",
+    "definition": "Um cliente é considerado coberto quando seu consultor realizou ao menos uma reunião com ele dentro do prazo esperado. O prazo padrão é de 30 dias. Após 6 meses de contrato, caso o cliente tenha uma frequência de atendimento individual definida, esse valor passa a valer no lugar do padrão. Qualquer tipo de reunião concluída conta para cobertura, seja ela de acompanhamento regular, Proteção Patrimonial ou institucional. Clientes em fase piloto e clientes que cancelaram o serviço na data de referência são excluídos desse controle. O consultor responsável pelo cliente na data de referência é quem responde pelo status de cobertura.",
     "criteria": [
-      "Ao menos uma reunião concluída dentro do prazo (padrão: 29 dias)",
+      "Ao menos uma reunião concluída dentro do prazo (padrão: 30 dias)",
       "Após 6 meses de contrato, vale a frequência individual do cliente se definida",
       "Qualquer tipo de reunião concluída conta para cobertura",
       "Cliente deve ser ativo e fee-based",
@@ -20,7 +20,9 @@
       "CDV-0002",
       "CDV-0003"
     ],
-    "tags": [],
+    "tags": [
+      "Cobertura de Base"
+    ],
     "history": [
       {
         "savedAt": "2026-04-08T12:00:00.000Z",
@@ -123,7 +125,7 @@
     "createdAt": "2026-04-08T12:00:00.000Z",
     "updatedAt": "2026-04-08T12:00:00.000Z",
     "summary": "Cliente descoberto é aquele que ultrapassou o prazo esperado de atendimento sem ter tido nenhuma reunião concluída.",
-    "definition": "Um cliente entra no status de descoberto quando o número de dias desde sua última reunião concluída supera o prazo de atendimento esperado. O prazo padrão é de 29 dias, podendo variar conforme a frequência individual definida após 6 meses de contrato (ver [[CDV-0001]]). Clientes que nunca tiveram nenhuma reunião registrada também são considerados descobertos. Não existe um prazo máximo formal para um cliente ficar sem reunião. O consultor responsável pelo cliente na data de referência é quem responde pelo cliente descoberto.",
+    "definition": "Um cliente entra no status de descoberto quando o número de dias desde sua última reunião concluída supera o prazo de atendimento esperado. O prazo padrão é de 30 dias, podendo variar conforme a frequência individual definida após 6 meses de contrato (ver [[CDV-0001]]). Clientes que nunca tiveram nenhuma reunião registrada também são considerados descobertos. Não existe um prazo máximo formal para um cliente ficar sem reunião. O consultor responsável pelo cliente na data de referência é quem responde pelo cliente descoberto.",
     "criteria": [
       "Dias desde a última reunião concluída superam o prazo esperado",
       "Clientes sem nenhuma reunião histórica também são considerados descobertos",
@@ -134,6 +136,9 @@
       "CDV-0001",
       "CDV-0003",
       "CDV-0004"
+    ],
+    "tags": [
+      "Cobertura de Base"
     ]
   },
   {
@@ -153,6 +158,9 @@
     "related": [
       "CDV-0001",
       "CDV-0002"
+    ],
+    "tags": [
+      "Cobertura de Base"
     ]
   },
   {
@@ -172,6 +180,9 @@
     ],
     "related": [
       "CDV-0002"
+    ],
+    "tags": [
+      "Cobertura de Base"
     ]
   },
   {
@@ -191,6 +202,9 @@
     ],
     "related": [
       "CDV-0015"
+    ],
+    "tags": [
+      "Indicacoes"
     ]
   },
   {
@@ -212,7 +226,10 @@
       "CDV-0001",
       "CDV-0003"
     ],
-    "tags": [],
+    "tags": [
+      "Cobertura de Base",
+      "Protecao Patrimonial"
+    ],
     "history": [
       {
         "savedAt": "2026-04-08T12:00:00.000Z",
@@ -270,6 +287,10 @@
     "related": [
       "CDV-0008",
       "CDV-0009"
+    ],
+    "tags": [
+      "Oneshot",
+      "Faturamento"
     ]
   },
   {
@@ -289,6 +310,10 @@
     "related": [
       "CDV-0007",
       "CDV-0009"
+    ],
+    "tags": [
+      "Oneshot",
+      "Faturamento"
     ]
   },
   {
@@ -308,6 +333,10 @@
     "related": [
       "CDV-0007",
       "CDV-0008"
+    ],
+    "tags": [
+      "Oneshot",
+      "Faturamento"
     ]
   },
   {
@@ -330,6 +359,10 @@
       "CDV-0011",
       "CDV-0012",
       "CDV-0013"
+    ],
+    "tags": [
+      "Oneshot",
+      "Renovacao"
     ]
   },
   {
@@ -353,7 +386,8 @@
       "CDV-0014"
     ],
     "tags": [
-      "churn"
+      "Oneshot",
+      "Renovacao"
     ],
     "history": [
       {
@@ -397,7 +431,8 @@
       "CDV-0011"
     ],
     "tags": [
-      "churn"
+      "Oneshot",
+      "Renovacao"
     ],
     "history": [
       {
@@ -459,6 +494,10 @@
     "related": [
       "CDV-0010",
       "CDV-0011"
+    ],
+    "tags": [
+      "Oneshot",
+      "Renovacao"
     ]
   },
   {
@@ -477,6 +516,10 @@
     ],
     "related": [
       "CDV-0011"
+    ],
+    "tags": [
+      "Renovacao",
+      "Churn"
     ]
   },
   {
@@ -498,6 +541,10 @@
     "related": [
       "CDV-0021",
       "CDV-0023"
+    ],
+    "tags": [
+      "KPIs",
+      "Indicacoes"
     ]
   },
   {
@@ -544,6 +591,9 @@
           "CDV-0023"
         ]
       }
+    ],
+    "tags": [
+      "KPIs"
     ]
   },
   {
@@ -565,6 +615,10 @@
     "related": [
       "CDV-0021",
       "CDV-0023"
+    ],
+    "tags": [
+      "KPIs",
+      "Captacao"
     ]
   },
   {
@@ -587,6 +641,10 @@
     "related": [
       "CDV-0021",
       "CDV-0023"
+    ],
+    "tags": [
+      "KPIs",
+      "Churn"
     ]
   },
   {
@@ -609,6 +667,10 @@
       "CDV-0020",
       "CDV-0021",
       "CDV-0024"
+    ],
+    "tags": [
+      "KPIs",
+      "Protecao Patrimonial"
     ]
   },
   {
@@ -632,6 +694,9 @@
       "CDV-0019",
       "CDV-0021",
       "CDV-0024"
+    ],
+    "tags": [
+      "KPIs"
     ]
   },
   {
@@ -660,6 +725,10 @@
       "CDV-0022",
       "CDV-0023",
       "CDV-0024"
+    ],
+    "tags": [
+      "KPIs",
+      "Score"
     ]
   },
   {
@@ -681,6 +750,9 @@
     "related": [
       "CDV-0021",
       "CDV-0023"
+    ],
+    "tags": [
+      "Score"
     ]
   },
   {
@@ -707,6 +779,10 @@
       "CDV-0020",
       "CDV-0021",
       "CDV-0024"
+    ],
+    "tags": [
+      "KPIs",
+      "Score"
     ]
   },
   {
@@ -729,6 +805,10 @@
     "related": [
       "CDV-0021",
       "CDV-0023"
+    ],
+    "tags": [
+      "KPIs",
+      "Score"
     ]
   },
   {
@@ -748,6 +828,9 @@
     "related": [
       "CDV-0007",
       "CDV-0026"
+    ],
+    "tags": [
+      "Faturamento"
     ]
   },
   {
@@ -767,6 +850,10 @@
     "related": [
       "CDV-0010",
       "CDV-0025"
+    ],
+    "tags": [
+      "Faturamento",
+      "Renovacao"
     ]
   },
   {
@@ -788,6 +875,9 @@
     "related": [
       "CDV-0030",
       "CDV-0031"
+    ],
+    "tags": [
+      "Classificacao de Cliente"
     ]
   },
   {
@@ -804,7 +894,10 @@
       "Valor true → cliente está no modelo team-based",
       "Valor false (ou ausente) → cliente não está no modelo team-based"
     ],
-    "related": []
+    "related": [],
+    "tags": [
+      "Classificacao de Cliente"
+    ]
   },
   {
     "id": "CDV-0029",
@@ -823,6 +916,9 @@
     "related": [
       "CDV-0032",
       "CDV-0033"
+    ],
+    "tags": [
+      "Classificacao de Cliente"
     ]
   },
   {
@@ -841,6 +937,10 @@
     "related": [
       "CDV-0027",
       "CDV-0031"
+    ],
+    "tags": [
+      "Classificacao de Cliente",
+      "Fee"
     ]
   },
   {
@@ -861,6 +961,9 @@
     "related": [
       "CDV-0027",
       "CDV-0030"
+    ],
+    "tags": [
+      "Fee"
     ]
   },
   {
@@ -878,6 +981,9 @@
     "related": [
       "CDV-0029",
       "CDV-0033"
+    ],
+    "tags": [
+      "Tombamento"
     ]
   },
   {
@@ -887,7 +993,7 @@
     "createdAt": "2026-04-08T12:00:00.000Z",
     "updatedAt": "2026-04-08T12:00:00.000Z",
     "summary": "O status de cobertura indica se o assessor está dentro da régua de relacionamento com o cliente, classificando-o como Coberto ou Descoberto com base na recência das reuniões realizadas.",
-    "definition": "Todo cliente ativo e fee-based recebe um status de cobertura. São elegíveis clientes com status Ativo, Onboarding, Aguardando reunião Onboarding ou Pendente, com carteira ativa e fee-based. Clientes Pilot são sempre classificados como Cobertos.\n\nA cobertura é calculada com base na reunião mais recente com status COMPLETED cuja data já tenha passado. Para efeito de reunião agendada, são consideradas reuniões com status SCHEDULED, em branco ou sem status, desde que a data seja igual ou posterior a ontem.\n\nA frequência padrão é de 30 dias. Se o cliente possuir frequência personalizada cadastrada e o último tombamento [[CDV-0032]] tiver ocorrido mais de 6 meses após a data de contrato [[CDV-0029]], a frequência personalizada prevalece. Quando ambas existem, usa-se sempre a menor.\n\nStatus possíveis:\n- Em dia: reunião dentro do prazo → Coberto [[CDV-0001]]\n- Marcar: prazo se encerra em até 10 dias → Coberto\n- Marcado: prazo venceu, mas há reunião agendada → Descoberto [[CDV-0002]]\n- Atrasado: prazo venceu sem reunião agendada → Descoberto\n- Sem registro: nunca houve reunião concluída → Descoberto",
+    "definition": "Todo cliente ativo e fee-based recebe um status de cobertura. Sao elegiveis clientes com status Ativo, Onboarding, Aguardando reuniao Onboarding ou Pendente, com carteira ativa e fee-based. Clientes Pilot sao sempre classificados como Cobertos.\n\nA cobertura e calculada com base na reuniao mais recente com status COMPLETED cuja data ja tenha passado - reunioes marcadas como concluidas com data futura sao desconsideradas. Para efeito de reuniao agendada, sao consideradas reunioes com status SCHEDULED, em branco ou sem status, desde que a data seja igual ou posterior a ontem.\n\nA frequencia padrao e de 30 dias. Se o cliente possuir frequencia personalizada cadastrada e o ultimo tombamento [[CDV-0032]] tiver ocorrido mais de 6 meses apos a data de contrato [[CDV-0029]], a frequencia personalizada prevalece. Quando ambas existem, usa-se sempre a menor.\n\nStatus possiveis:\n- Em dia: reuniao dentro do prazo -> Coberto [[CDV-0001]]\n- Marcar: prazo se encerra em ate 10 dias -> Coberto\n- Marcado: prazo venceu, mas ha reuniao agendada -> Descoberto [[CDV-0002]]\n- Atrasado: prazo venceu sem reuniao agendada -> Descoberto\n- Sem registro: nunca houve reuniao concluida -> Descoberto\n\nCom frequencia personalizada vigente:\n- Prazo vencido + reuniao agendada -> Marcado (Descoberto)\n- Prazo vencido sem reuniao agendada -> Atrasado (Descoberto)\n- Faltam <= 10 dias para vencer -> Marcar (Coberto)\n- Faltam > 10 dias para vencer -> Em dia (Coberto)\n\nSem frequencia personalizada (regra de 30 dias):\n- < 20 dias desde a ultima reuniao -> Em dia (Coberto)\n- Entre 20 e 30 dias -> Marcar (Coberto)\n- 30 dias com reuniao agendada -> Marcado (Descoberto)\n- 30 dias sem reuniao agendada -> Atrasado (Descoberto)",
     "criteria": [
       "Aplicável a clientes ativos e fee-based com status Ativo, Onboarding, Aguardando reunião Onboarding ou Pendente",
       "Clientes Pilot são sempre Cobertos",
@@ -904,6 +1010,10 @@
       "CDV-0002",
       "CDV-0029",
       "CDV-0032"
+    ],
+    "tags": [
+      "Cobertura de Base",
+      "Tombamento"
     ]
   },
   {
@@ -918,6 +1028,294 @@
       "Propriedade registrada diretamente no CRM",
       "Valor indica se o cliente preencheu ou não preencheu o formulário de anamnese R1"
     ],
-    "related": []
+    "related": [],
+    "tags": [
+      "Classificacao de Cliente"
+    ]
+  },
+  {
+    "id": "CDV-0035",
+    "title": "Periodo de Alocacao Inicial do Cliente",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Periodo que se inicia na data de contratacao e se encerra somente quando a equipe registra a conclusao da alocacao inicial no HubSpot. Sem esse registro, o cliente permanece em alocacao inicial independentemente do tempo decorrido.",
+    "definition": "O periodo de alocacao inicial marca a fase em que o cliente esta estruturando e posicionando seu patrimonio sob a custodia do Clube do Valor. O controle desse periodo e feito exclusivamente pelo registro no HubSpot - nao ha encerramento automatico por prazo. Clientes sem o registro de conclusao permanecem classificados como em alocacao inicial mesmo que ja tenham passado meses desde a contratacao.",
+    "criteria": [
+      "Inicio -> data de contratacao do servico [[CDV-0029]]",
+      "Encerramento -> registro manual da conclusao da alocacao inicial no HubSpot",
+      "Sem o registro de conclusao, o cliente segue em alocacao inicial independentemente do tempo decorrido",
+      "Acao requerida -> equipe deve registrar a conclusao no HubSpot assim que a alocacao inicial for finalizada"
+    ],
+    "related": [
+      "CDV-0029",
+      "CDV-0036",
+      "CDV-0040"
+    ],
+    "tags": [
+      "Alocacao Inicial"
+    ]
+  },
+  {
+    "id": "CDV-0036",
+    "title": "Investimento Inicial",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Corresponde a todo o patrimonio transferido para a custodia do Clube do Valor enquanto o cliente esta no periodo de Alocacao Inicial.",
+    "definition": "O investimento inicial e o conjunto de recursos que o cliente aporta durante a fase de estruturacao da carteira. Delimitado temporalmente pelo periodo de alocacao inicial [[CDV-0035]] - toda transferencia de patrimonio realizada antes do registro de conclusao no HubSpot e classificada como investimento inicial. Transferencias apos esse marco sao classificadas como Novo Aporte [[CDV-0037]].",
+    "criteria": [
+      "Escopo -> todo patrimonio transferido durante a Alocacao Inicial [[CDV-0035]]",
+      "Limite temporal -> encerra junto com o periodo de Alocacao Inicial (registro no HubSpot)",
+      "Distincao -> transferencias apos a conclusao da Alocacao Inicial sao classificadas como Novo Aporte [[CDV-0037]]"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0037",
+      "CDV-0040"
+    ],
+    "tags": [
+      "Alocacao Inicial",
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0037",
+    "title": "Novo Aporte",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Toda movimentacao de entrada de recursos realizada apos o encerramento do periodo de Alocacao Inicial e classificada como Novo Aporte.",
+    "definition": "O Novo Aporte representa recursos adicionais que o cliente traz para a carteira ja estruturada. O marco temporal que diferencia o Investimento Inicial [[CDV-0036]] do Novo Aporte e o registro de conclusao da alocacao inicial [[CDV-0035]] no HubSpot. Qualquer valor positivo creditado apos esse registro e um Novo Aporte.",
+    "criteria": [
+      "Definicao -> movimentacao de valor positivo apos o periodo de Alocacao Inicial [[CDV-0035]]",
+      "Marco temporal -> data de registro de conclusao da Alocacao Inicial no HubSpot",
+      "Distincao -> valores transferidos antes desse marco sao classificados como Investimento Inicial [[CDV-0036]]"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0036",
+      "CDV-0038"
+    ],
+    "tags": [
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0038",
+    "title": "Resgate",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Toda movimentacao de saida de recursos realizada apos o encerramento do periodo de Alocacao Inicial e classificada como Resgate.",
+    "definition": "O Resgate representa a retirada parcial ou total de recursos da carteira pelo cliente apos a fase de estruturacao. O marco temporal e o registro de conclusao da Alocacao Inicial [[CDV-0035]] no HubSpot. Saidas de patrimonio apos esse registro sao classificadas como Resgate, diferenciando-se do Contrato Encerrado [[CDV-0039]], que ocorre apos a data de cancelamento do cliente.",
+    "criteria": [
+      "Definicao -> movimentacao de valor negativo apos o periodo de Alocacao Inicial [[CDV-0035]]",
+      "Marco temporal -> data de registro de conclusao da Alocacao Inicial no HubSpot",
+      "Distincao -> saidas apos a data de cancelamento do cliente sao classificadas como Contrato Encerrado [[CDV-0039]]"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0037",
+      "CDV-0039"
+    ],
+    "tags": [
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0039",
+    "title": "Contrato Encerrado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Toda movimentacao de saida de patrimonio realizada apos a data de cancelamento do cliente, configurada no HubSpot, e classificada como Contrato Encerrado.",
+    "definition": "O Contrato Encerrado representa a fase de desvinculo formal do cliente com o Clube do Valor. O parametro de controle e a data de cancelamento registrada no HubSpot - qualquer saida de patrimonio a partir dessa data e tratada de forma distinta de um Resgate [[CDV-0038]] comum, permitindo rastreabilidade e analise de churn patrimonial.",
+    "criteria": [
+      "Definicao -> movimentacao de saida apos a data de cancelamento do cliente",
+      "Marco temporal -> data de cancelamento configurada no HubSpot",
+      "Distincao -> saidas antes do cancelamento sao classificadas como Resgate [[CDV-0038]]"
+    ],
+    "related": [
+      "CDV-0038"
+    ],
+    "tags": [
+      "Churn",
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0040",
+    "title": "Aporte Projetado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Valor de aporte planejado para a fase de Alocacao Inicial, combinado entre o cliente e o planejador na etapa de venda. Utilizado pelas liderancas para estimar a captacao futura.",
+    "definition": "O Aporte Projetado e uma estimativa, nao um valor contratual fixo - o cliente pode aportar mais ou menos do que o combinado. Sua principal funcao e fornecer previsibilidade a lideranca sobre o volume de captacao esperado, especialmente enquanto a Alocacao Inicial [[CDV-0035]] ainda esta em andamento. O acompanhamento entre o projetado e o realizado (Investimento Inicial [[CDV-0036]]) permite identificar desvios e apoiar decisoes comerciais e operacionais.",
+    "criteria": [
+      "Definicao -> aporte planejado para a fase de Alocacao Inicial [[CDV-0035]], acordado na etapa de venda",
+      "Responsaveis -> cliente e planejador, em conjunto",
+      "Natureza -> estimativa, podendo ser superada ou nao atingida",
+      "Finalidade -> previsibilidade da meta de captacao para as liderancas",
+      "Acompanhamento -> comparar o projetado com o realizado ao longo da Alocacao Inicial"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0036"
+    ],
+    "tags": [
+      "Alocacao Inicial",
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0041",
+    "title": "FGC - Garantia e Cobertura do Fundo Garantidor de Creditos",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "O FGC garante ate R$ 250 mil por CPF ou CNPJ por instituicao ou conglomerado financeiro, com teto de R$ 1 milhao a cada 4 anos por investidor.",
+    "definition": "O FGC protege depositantes e investidores em caso de intervencao ou liquidacao extrajudicial de instituicoes financeiras. O limite de R$ 250 mil e calculado por conglomerado - investimentos em dois bancos do mesmo grupo sao somados e nao multiplicam a protecao. Contas conjuntas tem o limite dividido igualmente entre os titulares. O teto global de R$ 1 milhao se aplica ao total de garantias recebidas por CPF ou CNPJ em um periodo de 4 anos.",
+    "criteria": [
+      "Limite por instituicao/conglomerado -> R$ 250 mil por CPF ou CNPJ",
+      "Teto global -> R$ 1 milhao a cada 4 anos por investidor",
+      "Contas conjuntas -> limite dividido igualmente entre os titulares",
+      "Produtos cobertos -> CDBs, LCIs, LCAs, poupanca, letras de cambio, depositos a vista e contas-salario",
+      "Produtos fora da cobertura -> Tesouro Direto, acoes, fundos de investimento, CRIs, CRAs, COE e debentures"
+    ],
+    "related": [
+      "CDV-0042",
+      "CDV-0043"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0042",
+    "title": "Concentracao em Emissores Bancarios",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando o cliente aloca mais de 30% do seu patrimonio em um unico emissor bancario.",
+    "definition": "A regra visa garantir a diversificacao minima das alocacoes em emissoes bancarias. Independentemente do valor absoluto investido, a proporcao em relacao ao patrimonio total do cliente e o parametro de controle. Qualquer alocacao que ultrapasse o limite de 30% em um unico emissor bancario deve ser identificada, monitorada e tratada.",
+    "criteria": [
+      "Limite maximo por emissor bancario -> 30% do patrimonio do cliente",
+      "Base de calculo -> patrimonio total do cliente [[CDV-0027]]",
+      "Acao requerida -> revisao e adequacao da alocacao ao limite estabelecido"
+    ],
+    "related": [
+      "CDV-0041",
+      "CDV-0043",
+      "CDV-0047"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0043",
+    "title": "Alocacao Total em Emissoes Bancarias",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando a alocacao total do cliente em emissoes bancarias supera R$ 1,9 milhao.",
+    "definition": "Mesmo que o cliente esteja diversificado entre multiplos emissores bancarios, a exposicao total a essa classe de ativo possui um teto absoluto. O limite de R$ 1,9 milhao funciona como controle global de concentracao setorial, complementando a regra de concentracao por emissor individual [[CDV-0042]].",
+    "criteria": [
+      "Limite total em emissoes bancarias -> R$ 1,9 milhao",
+      "Escopo -> soma de todas as posicoes em emissores bancarios do cliente",
+      "Acao requerida -> revisao da exposicao total ao segmento bancario"
+    ],
+    "related": [
+      "CDV-0041",
+      "CDV-0042"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0044",
+    "title": "Concentracao em Credito Privado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando o cliente possui mais de 4% do seu patrimonio alocado em um unico emissor de credito privado.",
+    "definition": "Emissores de credito privado apresentam risco de credito distinto dos emissores bancarios e nao contam com a cobertura do FGC [[CDV-0041]]. Por isso, o limite de concentracao por emissor e mais restritivo. A regra se aplica individualmente a cada emissor, e o calculo e feito com base no patrimonio total do cliente.",
+    "criteria": [
+      "Limite maximo por emissor de credito privado -> 4% do patrimonio do cliente",
+      "Base de calculo -> patrimonio total do cliente [[CDV-0027]]",
+      "Acao requerida -> revisao e adequacao da posicao ao limite estabelecido"
+    ],
+    "related": [
+      "CDV-0041",
+      "CDV-0045",
+      "CDV-0047"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0045",
+    "title": "Movimentacao em Ativo de Credito Privado Nao Autorizado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando e identificada uma nova operacao de compra em emissor de credito privado que nao consta na lista de emissores autorizados.",
+    "definition": "Toda operacao de credito privado deve ser realizada exclusivamente com emissores previamente aprovados e autorizados. A deteccao de uma compra em emissor fora dessa lista configura desenquadramento imediato, exigindo analise e tratamento pela equipe responsavel.",
+    "criteria": [
+      "Gatilho -> qualquer nova compra em emissor de credito privado nao autorizado",
+      "Escopo -> todas as operacoes de credito privado do cliente",
+      "Acao requerida -> verificacao imediata e tratamento do desenquadramento"
+    ],
+    "related": [
+      "CDV-0044",
+      "CDV-0047"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0046",
+    "title": "Concentracao em Criptoativos",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando a posicao total do cliente em criptoativos supera 5% do seu patrimonio total.",
+    "definition": "Dado o perfil de risco elevado e a volatilidade inerente aos criptoativos, a exposicao do cliente a essa classe e limitada a 5% do patrimonio total. O limite se aplica a soma de todas as posicoes em criptoativos, independentemente do tipo ou da moeda digital envolvida.",
+    "criteria": [
+      "Limite maximo em criptoativos -> 5% do patrimonio total do cliente",
+      "Base de calculo -> patrimonio total do cliente [[CDV-0027]]",
+      "Escopo -> soma de todas as posicoes em criptoativos do cliente",
+      "Acao requerida -> revisao e adequacao da exposicao ao limite estabelecido"
+    ],
+    "related": [],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0047",
+    "title": "Movimentacoes em Emissores Nao Autorizados",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Painel que consolida todas as operacoes bancarias e de credito privado realizadas fora das diretrizes autorizadas nos ultimos 14 dias.",
+    "definition": "Esta regra funciona como uma visao consolidada de controle. Ela reune em uma unica tela todas as operacoes de compra em emissores nao enquadrados nas diretrizes vigentes, abrangendo tanto emissores bancarios quanto de credito privado [[CDV-0045]]. A janela de monitoramento e de 14 dias corridos.",
+    "criteria": [
+      "Escopo -> operacoes bancarias e de credito privado fora das diretrizes",
+      "Janela de monitoramento -> ultimos 14 dias",
+      "Acao requerida -> analise, registro e tratamento de cada operacao identificada"
+    ],
+    "related": [
+      "CDV-0042",
+      "CDV-0044",
+      "CDV-0045"
+    ],
+    "tags": [
+      "Compliance"
+    ]
   }
 ]
