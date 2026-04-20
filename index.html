@@ -740,28 +740,28 @@ document.addEventListener('click',e=>{
 // ── SIDEBAR ──
 function renderList(){
   const el=document.getElementById('rulesList');
-  const term=globalTerm.toLowerCase();
+  const term=norm(globalTerm);
   const filtered=rules.filter(r=>{
     if(r.deleted) return false;
     if(activeTag&&!(r.tags||[]).includes(activeTag)) return false;
     if(!term) return true;
-    const matchTitle=r.id.toLowerCase().includes(term)||r.title.toLowerCase().includes(term);
-    const matchSummary=(r.summary||'').toLowerCase().includes(term);
-    const matchDef=(r.definition||'').toLowerCase().includes(term);
-    const matchCriteria=(r.criteria||[]).some(c=>c.toLowerCase().includes(term));
-    const matchTag=(r.tags||[]).some(t=>t.toLowerCase().includes(term));
+    const matchTitle=norm(r.id).includes(term)||norm(r.title).includes(term);
+    const matchSummary=norm(r.summary).includes(term);
+    const matchDef=norm(r.definition).includes(term);
+    const matchCriteria=(r.criteria||[]).some(c=>norm(c).includes(term));
+    const matchTag=(r.tags||[]).some(t=>norm(t).includes(term));
     return matchTitle||matchSummary||matchDef||matchCriteria||matchTag;
   });
   if(!filtered.length){el.innerHTML='<div class="no-results">Nenhuma regra encontrada</div>';return;}
   el.innerHTML=filtered.map(r=>{
     let hitLabel='';
     if(globalTerm){
-      const t=globalTerm.toLowerCase();
+      const t=norm(globalTerm);
       const hits=[];
-      if(r.title.toLowerCase().includes(t)||r.id.toLowerCase().includes(t)) hits.push('título');
-      if((r.summary||'').toLowerCase().includes(t)) hits.push('resumo');
-      if((r.definition||'').toLowerCase().includes(t)) hits.push('definição');
-      if((r.criteria||[]).some(c=>c.toLowerCase().includes(t))) hits.push('critérios');
+      if(norm(r.title).includes(t)||norm(r.id).includes(t)) hits.push('título');
+      if(norm(r.summary).includes(t)) hits.push('resumo');
+      if(norm(r.definition).includes(t)) hits.push('definição');
+      if((r.criteria||[]).some(c=>norm(c).includes(t))) hits.push('critérios');
       if(hits.length) hitLabel=`<div style="font-size:10px;color:var(--blue);margin-top:4px">🔍 em: ${hits.join(' · ')}</div>`;
     }
     const tagHtml=(r.tags||[]).length?`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px">${(r.tags||[]).map(t=>`<span class="tag-chip tag-chip-rule" style="font-size:10px;padding:1px 7px">${t}</span>`).join('')}</div>`:'';
@@ -776,6 +776,7 @@ function renderList(){
     </div>`;
   }).join('');
 }
+function norm(s){return(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 function hl(t,q){if(!q)return t;return t.replace(new RegExp(`(${escRe(q)})`,'gi'),'<mark class="hl">$1</mark>');}
 function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
 function filterCat(cat,el){activeCat=cat;document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');renderList();}
@@ -785,7 +786,7 @@ function renderHome(){
   const area=document.getElementById('homeLayer');
   document.getElementById('homeLayer').style.display='';
   document.getElementById('detailLayer').style.display='none';
-  const term=globalTerm.toLowerCase();
+  const term=norm(globalTerm);
   const active=rules.filter(r=>!r.deleted);
   const total=active.length,ativas=active.filter(r=>r.status!=='inativa').length,inativas=active.filter(r=>r.status==='inativa').length;
   const sorted=[...active].sort((a,b)=>{let va=a[sortCol]||'',vb=b[sortCol]||'';return sortAsc?va.localeCompare(vb):vb.localeCompare(va);});
@@ -794,7 +795,7 @@ function renderHome(){
     if(!term) return '';
     const sources=[{label:'Resumo',text:r.summary||''},{label:'Definição',text:(r.definition||'').replace(/\[\[|\]\]/g,'')},{label:'Critérios',text:(r.criteria||[]).join(' · ')}];
     for(const s of sources){
-      const idx=s.text.toLowerCase().indexOf(term);
+      const idx=norm(s.text).indexOf(term);
       if(idx===-1) continue;
       const start=Math.max(0,idx-40),end=Math.min(s.text.length,idx+term.length+60);
       return`<div class="td-snippet"><div class="td-snippet-label">${s.label}</div>${hl((start>0?'…':'')+s.text.slice(start,end)+(end<s.text.length?'…':''),globalTerm)}</div>`;
@@ -803,7 +804,7 @@ function renderHome(){
   }
   function rowVisible(r){
     if(!term) return true;
-    return [r.id,r.title,r.summary||'',r.definition||'',...(r.criteria||[]),...(r.tags||[])].some(s=>s.toLowerCase().includes(term));
+    return [r.id,r.title,r.summary||'',r.definition||'',...(r.criteria||[]),...(r.tags||[])].some(s=>norm(s).includes(term));
   }
   const matchCount=sorted.filter(rowVisible).length;
   area.innerHTML=`
