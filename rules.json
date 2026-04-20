@@ -1423,12 +1423,14 @@
     "title": "Captacao Liquida",
     "status": "ativa",
     "createdAt": "2026-04-20T12:00:00.000Z",
-    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T14:00:00.000Z",
     "summary": "A captacao liquida e o resultado final de todas as entradas e saidas de patrimonio atribuidas a um consultor em um periodo, composta por quatro tipos de movimentacao.",
-    "definition": "A captacao liquida resume o impacto financeiro do trabalho do consultor na carteira de clientes. E formada por quatro componentes: captacao da base [[CDV-0048]] (aportes e resgates de clientes existentes), investimento inicial de indicacao [[CDV-0049]] (patrimonio trazido por clientes indicados), impacto de placement [[CDV-0050]] (desconto por clientes que viraram placement) e contrato encerrado [[CDV-0051]] (saidas por cancelamento quando o consultor e responsavel). O resultado pode ser positivo ou negativo.",
+    "definition": "A captacao liquida resume o impacto financeiro do trabalho do consultor na carteira de clientes. E formada por quatro componentes: captacao da base [[CDV-0048]] (aportes e resgates de clientes existentes), investimento inicial de indicacao [[CDV-0049]] (patrimonio trazido por clientes indicados), impacto de placement [[CDV-0050]] (desconto por clientes que viraram placement) e contrato encerrado [[CDV-0051]] (saidas por cancelamento quando o consultor e responsavel). Importante: nem todo distrato impacta a captacao liquida. Para entrar no calculo, o encerramento precisa ser de cliente fee-based e o churn precisa estar marcado como responsabilidade do consultor [[CDV-0051]]. O acompanhamento completo de distratos - que inclui Pilot, clientes nao-fee-based e independe do PL - e feito separadamente e pode divergir dos numeros de captacao [[CDV-0054]].",
     "criteria": [
       "Componentes -> captacao da base [[CDV-0048]] + investimento inicial de indicacao [[CDV-0049]] + impacto de placement [[CDV-0050]] + contrato encerrado [[CDV-0051]]",
-      "Escopo -> clientes fee-based, exceto onde a regra especifica o contrario",
+      "Escopo -> apenas clientes fee-based",
+      "Distratos -> so entram no calculo quando o churn e responsabilidade do consultor [[CDV-0051]]",
+      "Atencao -> o total de distratos da base e maior do que o que aparece na captacao — ver acompanhamento completo em [[CDV-0054]]",
       "Resultado -> pode ser positivo (mais entradas) ou negativo (mais saidas)",
       "Periodicidade -> calculado mensalmente para acompanhamento de metas"
     ],
@@ -1437,7 +1439,9 @@
       "CDV-0049",
       "CDV-0050",
       "CDV-0051",
-      "CDV-0017"
+      "CDV-0017",
+      "CDV-0053",
+      "CDV-0054"
     ],
     "tags": [
       "Captacao",
