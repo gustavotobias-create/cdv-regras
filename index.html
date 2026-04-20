@@ -803,6 +803,7 @@ function renderHome(){
     return '';
   }
   function rowVisible(r){
+    if(activeTag&&!(r.tags||[]).includes(activeTag)) return false;
     if(!term) return true;
     return [r.id,r.title,r.summary||'',r.definition||'',...(r.criteria||[]),...(r.tags||[])].some(s=>norm(s).includes(term));
   }
