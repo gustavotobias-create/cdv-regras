@@ -1317,5 +1317,460 @@
     "tags": [
       "Compliance"
     ]
+  },
+  {
+    "id": "CDV-0035",
+    "title": "Periodo de Alocacao Inicial do Cliente",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Periodo que se inicia na data de contratacao e se encerra somente quando a equipe registra a conclusao da alocacao inicial no HubSpot. Sem esse registro, o cliente permanece em alocacao inicial independentemente do tempo decorrido.",
+    "definition": "O periodo de alocacao inicial marca a fase em que o cliente esta estruturando e posicionando seu patrimonio sob a custodia do Clube do Valor. O controle desse periodo e feito exclusivamente pelo registro no HubSpot - nao ha encerramento automatico por prazo. Clientes sem o registro de conclusao permanecem classificados como em alocacao inicial mesmo que ja tenham passado meses desde a contratacao.",
+    "criteria": [
+      "Inicio -> data de contratacao do servico [[CDV-0029]]",
+      "Encerramento -> registro manual da conclusao da alocacao inicial no HubSpot",
+      "Sem o registro de conclusao, o cliente segue em alocacao inicial independentemente do tempo decorrido",
+      "Acao requerida -> equipe deve registrar a conclusao no HubSpot assim que a alocacao inicial for finalizada"
+    ],
+    "related": [
+      "CDV-0029",
+      "CDV-0036",
+      "CDV-0040"
+    ],
+    "tags": [
+      "Alocacao Inicial"
+    ]
+  },
+  {
+    "id": "CDV-0036",
+    "title": "Investimento Inicial",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Corresponde a todo o patrimonio transferido para a custodia do Clube do Valor enquanto o cliente esta no periodo de Alocacao Inicial.",
+    "definition": "O investimento inicial e o conjunto de recursos que o cliente aporta durante a fase de estruturacao da carteira. Delimitado temporalmente pelo periodo de alocacao inicial [[CDV-0035]] - toda transferencia de patrimonio realizada antes do registro de conclusao no HubSpot e classificada como investimento inicial. Transferencias apos esse marco sao classificadas como Novo Aporte [[CDV-0037]].",
+    "criteria": [
+      "Escopo -> todo patrimonio transferido durante a Alocacao Inicial [[CDV-0035]]",
+      "Limite temporal -> encerra junto com o periodo de Alocacao Inicial (registro no HubSpot)",
+      "Distincao -> transferencias apos a conclusao da Alocacao Inicial sao classificadas como Novo Aporte [[CDV-0037]]"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0037",
+      "CDV-0040"
+    ],
+    "tags": [
+      "Alocacao Inicial",
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0037",
+    "title": "Novo Aporte",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Toda movimentacao de entrada de recursos realizada apos o encerramento do periodo de Alocacao Inicial e classificada como Novo Aporte.",
+    "definition": "O Novo Aporte representa recursos adicionais que o cliente traz para a carteira ja estruturada. O marco temporal que diferencia o Investimento Inicial [[CDV-0036]] do Novo Aporte e o registro de conclusao da alocacao inicial [[CDV-0035]] no HubSpot. Qualquer valor positivo creditado apos esse registro e um Novo Aporte.",
+    "criteria": [
+      "Definicao -> movimentacao de valor positivo apos o periodo de Alocacao Inicial [[CDV-0035]]",
+      "Marco temporal -> data de registro de conclusao da Alocacao Inicial no HubSpot",
+      "Distincao -> valores transferidos antes desse marco sao classificados como Investimento Inicial [[CDV-0036]]"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0036",
+      "CDV-0038"
+    ],
+    "tags": [
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0038",
+    "title": "Resgate",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Toda movimentacao de saida de recursos realizada apos o encerramento do periodo de Alocacao Inicial e classificada como Resgate.",
+    "definition": "O Resgate representa a retirada parcial ou total de recursos da carteira pelo cliente apos a fase de estruturacao. O marco temporal e o registro de conclusao da Alocacao Inicial [[CDV-0035]] no HubSpot. Saidas de patrimonio apos esse registro sao classificadas como Resgate, diferenciando-se do Contrato Encerrado [[CDV-0039]], que ocorre apos a data de cancelamento do cliente.",
+    "criteria": [
+      "Definicao -> movimentacao de valor negativo apos o periodo de Alocacao Inicial [[CDV-0035]]",
+      "Marco temporal -> data de registro de conclusao da Alocacao Inicial no HubSpot",
+      "Distincao -> saidas apos a data de cancelamento do cliente sao classificadas como Contrato Encerrado [[CDV-0039]]"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0037",
+      "CDV-0039"
+    ],
+    "tags": [
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0039",
+    "title": "Contrato Encerrado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Toda movimentacao de saida de patrimonio realizada apos a data de cancelamento do cliente, configurada no HubSpot, e classificada como Contrato Encerrado.",
+    "definition": "O Contrato Encerrado representa a fase de desvinculo formal do cliente com o Clube do Valor. O parametro de controle e a data de cancelamento registrada no HubSpot - qualquer saida de patrimonio a partir dessa data e tratada de forma distinta de um Resgate [[CDV-0038]] comum, permitindo rastreabilidade e analise de churn patrimonial.",
+    "criteria": [
+      "Definicao -> movimentacao de saida apos a data de cancelamento do cliente",
+      "Marco temporal -> data de cancelamento configurada no HubSpot",
+      "Distincao -> saidas antes do cancelamento sao classificadas como Resgate [[CDV-0038]]"
+    ],
+    "related": [
+      "CDV-0038"
+    ],
+    "tags": [
+      "Churn",
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0040",
+    "title": "Aporte Projetado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Valor de aporte planejado para a fase de Alocacao Inicial, combinado entre o cliente e o planejador na etapa de venda. Utilizado pelas liderancas para estimar a captacao futura.",
+    "definition": "O Aporte Projetado e uma estimativa, nao um valor contratual fixo - o cliente pode aportar mais ou menos do que o combinado. Sua principal funcao e fornecer previsibilidade a lideranca sobre o volume de captacao esperado, especialmente enquanto a Alocacao Inicial [[CDV-0035]] ainda esta em andamento. O acompanhamento entre o projetado e o realizado (Investimento Inicial [[CDV-0036]]) permite identificar desvios e apoiar decisoes comerciais e operacionais.",
+    "criteria": [
+      "Definicao -> aporte planejado para a fase de Alocacao Inicial [[CDV-0035]], acordado na etapa de venda",
+      "Responsaveis -> cliente e planejador, em conjunto",
+      "Natureza -> estimativa, podendo ser superada ou nao atingida",
+      "Finalidade -> previsibilidade da meta de captacao para as liderancas",
+      "Acompanhamento -> comparar o projetado com o realizado ao longo da Alocacao Inicial"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0036"
+    ],
+    "tags": [
+      "Alocacao Inicial",
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0041",
+    "title": "FGC - Garantia e Cobertura do Fundo Garantidor de Creditos",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "O FGC garante ate R$ 250 mil por CPF ou CNPJ por instituicao ou conglomerado financeiro, com teto de R$ 1 milhao a cada 4 anos por investidor.",
+    "definition": "O FGC protege depositantes e investidores em caso de intervencao ou liquidacao extrajudicial de instituicoes financeiras. O limite de R$ 250 mil e calculado por conglomerado - investimentos em dois bancos do mesmo grupo sao somados e nao multiplicam a protecao. Contas conjuntas tem o limite dividido igualmente entre os titulares. O teto global de R$ 1 milhao se aplica ao total de garantias recebidas por CPF ou CNPJ em um periodo de 4 anos.",
+    "criteria": [
+      "Limite por instituicao/conglomerado -> R$ 250 mil por CPF ou CNPJ",
+      "Teto global -> R$ 1 milhao a cada 4 anos por investidor",
+      "Contas conjuntas -> limite dividido igualmente entre os titulares",
+      "Produtos cobertos -> CDBs, LCIs, LCAs, poupanca, letras de cambio, depositos a vista e contas-salario",
+      "Produtos fora da cobertura -> Tesouro Direto, acoes, fundos de investimento, CRIs, CRAs, COE e debentures"
+    ],
+    "related": [
+      "CDV-0042",
+      "CDV-0043"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0042",
+    "title": "Concentracao em Emissores Bancarios",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando o cliente aloca mais de 30% do seu patrimonio em um unico emissor bancario.",
+    "definition": "A regra visa garantir a diversificacao minima das alocacoes em emissoes bancarias. Independentemente do valor absoluto investido, a proporcao em relacao ao patrimonio total do cliente e o parametro de controle. Qualquer alocacao que ultrapasse o limite de 30% em um unico emissor bancario deve ser identificada, monitorada e tratada.",
+    "criteria": [
+      "Limite maximo por emissor bancario -> 30% do patrimonio do cliente",
+      "Base de calculo -> patrimonio total do cliente [[CDV-0027]]",
+      "Acao requerida -> revisao e adequacao da alocacao ao limite estabelecido"
+    ],
+    "related": [
+      "CDV-0041",
+      "CDV-0043",
+      "CDV-0047"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0043",
+    "title": "Alocacao Total em Emissoes Bancarias",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando a alocacao total do cliente em emissoes bancarias supera R$ 1,9 milhao.",
+    "definition": "Mesmo que o cliente esteja diversificado entre multiplos emissores bancarios, a exposicao total a essa classe de ativo possui um teto absoluto. O limite de R$ 1,9 milhao funciona como controle global de concentracao setorial, complementando a regra de concentracao por emissor individual [[CDV-0042]].",
+    "criteria": [
+      "Limite total em emissoes bancarias -> R$ 1,9 milhao",
+      "Escopo -> soma de todas as posicoes em emissores bancarios do cliente",
+      "Acao requerida -> revisao da exposicao total ao segmento bancario"
+    ],
+    "related": [
+      "CDV-0041",
+      "CDV-0042"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0044",
+    "title": "Concentracao em Credito Privado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando o cliente possui mais de 4% do seu patrimonio alocado em um unico emissor de credito privado.",
+    "definition": "Emissores de credito privado apresentam risco de credito distinto dos emissores bancarios e nao contam com a cobertura do FGC [[CDV-0041]]. Por isso, o limite de concentracao por emissor e mais restritivo. A regra se aplica individualmente a cada emissor, e o calculo e feito com base no patrimonio total do cliente.",
+    "criteria": [
+      "Limite maximo por emissor de credito privado -> 4% do patrimonio do cliente",
+      "Base de calculo -> patrimonio total do cliente [[CDV-0027]]",
+      "Acao requerida -> revisao e adequacao da posicao ao limite estabelecido"
+    ],
+    "related": [
+      "CDV-0041",
+      "CDV-0045",
+      "CDV-0047"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0045",
+    "title": "Movimentacao em Ativo de Credito Privado Nao Autorizado",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando e identificada uma nova operacao de compra em emissor de credito privado que nao consta na lista de emissores autorizados.",
+    "definition": "Toda operacao de credito privado deve ser realizada exclusivamente com emissores previamente aprovados e autorizados. A deteccao de uma compra em emissor fora dessa lista configura desenquadramento imediato, exigindo analise e tratamento pela equipe responsavel.",
+    "criteria": [
+      "Gatilho -> qualquer nova compra em emissor de credito privado nao autorizado",
+      "Escopo -> todas as operacoes de credito privado do cliente",
+      "Acao requerida -> verificacao imediata e tratamento do desenquadramento"
+    ],
+    "related": [
+      "CDV-0044",
+      "CDV-0047"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0046",
+    "title": "Concentracao em Criptoativos",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Alerta acionado quando a posicao total do cliente em criptoativos supera 5% do seu patrimonio total.",
+    "definition": "Dado o perfil de risco elevado e a volatilidade inerente aos criptoativos, a exposicao do cliente a essa classe e limitada a 5% do patrimonio total. O limite se aplica a soma de todas as posicoes em criptoativos, independentemente do tipo ou da moeda digital envolvida.",
+    "criteria": [
+      "Limite maximo em criptoativos -> 5% do patrimonio total do cliente",
+      "Base de calculo -> patrimonio total do cliente [[CDV-0027]]",
+      "Escopo -> soma de todas as posicoes em criptoativos do cliente",
+      "Acao requerida -> revisao e adequacao da exposicao ao limite estabelecido"
+    ],
+    "related": [],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0047",
+    "title": "Movimentacoes em Emissores Nao Autorizados",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Painel que consolida todas as operacoes bancarias e de credito privado realizadas fora das diretrizes autorizadas nos ultimos 14 dias.",
+    "definition": "Esta regra funciona como uma visao consolidada de controle. Ela reune em uma unica tela todas as operacoes de compra em emissores nao enquadrados nas diretrizes vigentes, abrangendo tanto emissores bancarios quanto de credito privado [[CDV-0045]]. A janela de monitoramento e de 14 dias corridos.",
+    "criteria": [
+      "Escopo -> operacoes bancarias e de credito privado fora das diretrizes",
+      "Janela de monitoramento -> ultimos 14 dias",
+      "Acao requerida -> analise, registro e tratamento de cada operacao identificada"
+    ],
+    "related": [
+      "CDV-0042",
+      "CDV-0044",
+      "CDV-0045"
+    ],
+    "tags": [
+      "Compliance"
+    ]
+  },
+  {
+    "id": "CDV-0048",
+    "title": "Captacao da Base",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Sao todos os novos aportes e resgates de clientes que ja estao na carteira do consultor, desconsiderando o patrimonio trazido na entrada do cliente.",
+    "definition": "A captacao da base reune todas as movimentacoes de clientes que ja passaram pela fase de alocacao inicial [[CDV-0035]]. Entram aqui novos aportes [[CDV-0037]] e resgates [[CDV-0038]] feitos ao longo do relacionamento. O investimento inicial [[CDV-0036]] nao faz parte desse calculo pois e tratado separadamente. Aplica-se apenas a clientes fee-based que nao sejam placement.",
+    "criteria": [
+      "Escopo -> clientes fee-based e nao-placement com alocacao inicial concluida [[CDV-0035]]",
+      "Inclui -> novos aportes [[CDV-0037]] e resgates [[CDV-0038]]",
+      "Exclui -> investimento inicial [[CDV-0036]]",
+      "Responsabilidade -> atribuida ao consultor de accountability da transacao"
+    ],
+    "related": [
+      "CDV-0035",
+      "CDV-0036",
+      "CDV-0037",
+      "CDV-0038",
+      "CDV-0052"
+    ],
+    "tags": [
+      "Captacao"
+    ]
+  },
+  {
+    "id": "CDV-0049",
+    "title": "Investimento Inicial de Indicacao",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Quando um cliente novo foi indicado por um consultor, o investimento inicial desse cliente e contabilizado para o consultor que fez a indicacao e nao para o consultor que vai gerenciar a carteira.",
+    "definition": "Em uma indicacao, dois consultores estao envolvidos: o que originou o cliente e o que vai acompanha-lo no dia a dia. O investimento inicial [[CDV-0036]] desse cliente e atribuido a quem fez a indicacao, reconhecendo o papel comercial de trazer o cliente para a base. Isso vale apenas para o investimento inicial - as movimentacoes posteriores seguem as regras normais de captacao da base [[CDV-0048]].",
+    "criteria": [
+      "Condicao -> cliente possui consultor de indicacao registrado",
+      "Escopo -> aplica-se apenas ao investimento inicial [[CDV-0036]]",
+      "Responsabilidade -> atribuida ao consultor de indicacao, nao ao de accountability",
+      "Movimentacoes futuras -> seguem a regra padrao de captacao da base [[CDV-0048]]"
+    ],
+    "related": [
+      "CDV-0005",
+      "CDV-0036",
+      "CDV-0048",
+      "CDV-0052"
+    ],
+    "tags": [
+      "Captacao",
+      "Indicacoes"
+    ]
+  },
+  {
+    "id": "CDV-0050",
+    "title": "Impacto do Placement na Captacao",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Quando um cliente que era uma oportunidade do advisor encerra o contrato como placement, metade do patrimonio fechado na venda e descontada da captacao do consultor responsavel na data de cancelamento.",
+    "definition": "O placement e um cliente que transferiu a gestao da carteira para outra instituicao, mas manteve vinculo com o Clube do Valor. Quando esse cliente cancela o contrato, o consultor responsavel recebe um desconto na captacao equivalente a metade do PL fechado na ocasiao da venda. Esse desconto representa o impacto de nao ter conseguido manter o cliente como ativo ao longo do tempo.",
+    "criteria": [
+      "Condicao -> cliente com status Placement que era uma oportunidade do advisor",
+      "Data do evento -> data de cancelamento registrada no HubSpot",
+      "Valor descontado -> metade do PL fechado na epoca da venda",
+      "Responsabilidade -> atribuida ao consultor dono do cliente na data de cancelamento"
+    ],
+    "related": [
+      "CDV-0039",
+      "CDV-0048",
+      "CDV-0052"
+    ],
+    "tags": [
+      "Captacao",
+      "Churn"
+    ]
+  },
+  {
+    "id": "CDV-0051",
+    "title": "Contrato Encerrado e Responsabilidade do Consultor",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "O encerramento de contrato so impacta a captacao do consultor quando o churn e considerado responsabilidade dele. Cancelamentos fora do seu perimetro de atuacao sao excluidos do calculo.",
+    "definition": "Nem todo distrato e responsabilidade direta do consultor. Quando o cliente cancela por razoes que fogem do controle ou da atuacao do consultor, a saida de patrimonio nao e descontada da sua meta de captacao. Esse criterio garante uma medicao mais justa do desempenho - o consultor e avaliado apenas pelos churns que estavam dentro do seu perimetro de atuacao. Essa regra se aplica aos contratos encerrados [[CDV-0039]] a partir de janeiro de 2025.",
+    "criteria": [
+      "Condicao para impactar -> churn marcado como responsabilidade do consultor no HubSpot",
+      "Quando nao impacta -> churns em que o consultor nao e considerado responsavel sao excluidos",
+      "Aplica-se a -> contratos encerrados [[CDV-0039]] a partir de janeiro de 2025"
+    ],
+    "related": [
+      "CDV-0018",
+      "CDV-0039",
+      "CDV-0048",
+      "CDV-0052"
+    ],
+    "tags": [
+      "Captacao",
+      "Churn"
+    ]
+  },
+  {
+    "id": "CDV-0052",
+    "title": "Captacao Liquida",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "A captacao liquida e o resultado final de todas as entradas e saidas de patrimonio atribuidas a um consultor em um periodo, composta por quatro tipos de movimentacao.",
+    "definition": "A captacao liquida resume o impacto financeiro do trabalho do consultor na carteira de clientes. E formada por quatro componentes: captacao da base [[CDV-0048]] (aportes e resgates de clientes existentes), investimento inicial de indicacao [[CDV-0049]] (patrimonio trazido por clientes indicados), impacto de placement [[CDV-0050]] (desconto por clientes que viraram placement) e contrato encerrado [[CDV-0051]] (saidas por cancelamento quando o consultor e responsavel). O resultado pode ser positivo ou negativo.",
+    "criteria": [
+      "Componentes -> captacao da base [[CDV-0048]] + investimento inicial de indicacao [[CDV-0049]] + impacto de placement [[CDV-0050]] + contrato encerrado [[CDV-0051]]",
+      "Escopo -> clientes fee-based, exceto onde a regra especifica o contrario",
+      "Resultado -> pode ser positivo (mais entradas) ou negativo (mais saidas)",
+      "Periodicidade -> calculado mensalmente para acompanhamento de metas"
+    ],
+    "related": [
+      "CDV-0048",
+      "CDV-0049",
+      "CDV-0050",
+      "CDV-0051"
+    ],
+    "tags": [
+      "Captacao",
+      "KPIs"
+    ]
+  },
+  {
+    "id": "CDV-0053",
+    "title": "Evento de Distrato",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "O distrato e registrado no momento em que o ticket do cliente entra no status Em Processo de Distrato no HubSpot. Essa e a data de referencia para todos os acompanhamentos de distrato.",
+    "definition": "O evento de distrato marca o momento em que o cliente formalizou a intencao de encerrar o contrato. Independentemente de quando o cancelamento e efetivado no sistema, o que importa para analise de qualidade de servico e experiencia do cliente e a data em que o ticket entrou em Em Processo de Distrato. Essa data permite identificar tendencias, motivos e padroes de saida com mais precisao.",
+    "criteria": [
+      "Gatilho -> ticket do cliente entra no status Em Processo de Distrato no HubSpot",
+      "Data de referencia -> data de entrada no status, nao a data de cancelamento efetivo",
+      "Finalidade -> analise de qualidade de servico e experiencia do cliente",
+      "Atencao -> essa data pode ser diferente da data usada no calculo de captacao liquida [[CDV-0052]]"
+    ],
+    "related": [
+      "CDV-0039",
+      "CDV-0052",
+      "CDV-0054"
+    ],
+    "tags": [
+      "Churn"
+    ]
+  },
+  {
+    "id": "CDV-0054",
+    "title": "Escopo de Clientes no Acompanhamento de Distratos",
+    "status": "ativa",
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z",
+    "summary": "Para analise de qualidade de servico, sao considerados todos os clientes Wealth Services (Pilot, Wealth Advisor e Wealth Management) que entraram em processo de distrato, independentemente de serem fee-based ou do patrimonio que possuem.",
+    "definition": "O objetivo do acompanhamento de distratos e entender os motivos de saida e melhorar a qualidade do servico - nao medir captacao liquida. Por isso, o escopo e mais amplo do que o da meta do consultor: inclui clientes Pilot, independe de ser fee-based e nao leva em conta o patrimonio no momento do distrato. A unica condicao e que o cliente seja da base ativa de Wealth Services e tenha entrado formalmente no processo de distrato [[CDV-0053]].",
+    "criteria": [
+      "Servicos incluidos -> Wealth Advisor, Wealth Management e Pilot",
+      "Fee-based -> considerados independentemente de serem fee-based ou nao",
+      "Patrimonio -> considerados independentemente do PL no momento do distrato",
+      "Condicao -> cliente da base ativa que entrou em Em Processo de Distrato [[CDV-0053]]",
+      "Diferenca com captacao liquida -> esse escopo e mais amplo e pode divergir dos distratos que impactam a meta do consultor [[CDV-0052]]"
+    ],
+    "related": [
+      "CDV-0039",
+      "CDV-0052",
+      "CDV-0053"
+    ],
+    "tags": [
+      "Churn"
+    ]
   }
 ]
