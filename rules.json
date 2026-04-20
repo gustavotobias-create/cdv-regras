@@ -1476,15 +1476,15 @@
     "title": "Escopo de Clientes no Acompanhamento de Distratos",
     "status": "ativa",
     "createdAt": "2026-04-20T12:00:00.000Z",
-    "updatedAt": "2026-04-20T12:00:00.000Z",
-    "summary": "Para analise de qualidade de servico, sao considerados todos os clientes Wealth Services (Pilot, Wealth Advisor e Wealth Management) que entraram em processo de distrato, independentemente de serem fee-based ou do patrimonio que possuem.",
-    "definition": "O objetivo do acompanhamento de distratos e entender os motivos de saida e melhorar a qualidade do servico - nao medir captacao liquida. Por isso, o escopo e mais amplo do que o da meta do consultor: inclui clientes Pilot, independe de ser fee-based e nao leva em conta o patrimonio no momento do distrato. A unica condicao e que o cliente seja da base ativa de Wealth Services e tenha entrado formalmente no processo de distrato [[CDV-0053]].",
+    "updatedAt": "2026-04-20T14:30:00.000Z",
+    "summary": "Todo cliente WS ativo (Pilot, Wealth Advisor ou Wealth Management) que entrou em processo de distrato e considerado nesta analise. Fee-based, PL e demais criterios nao sao filtros aqui.",
+    "definition": "O objetivo do acompanhamento de distratos e entender os motivos de saida e melhorar a qualidade do servico - nao medir captacao liquida. Por isso, fee-based nao e criterio: um cliente Pilot ou nao-fee-based que distrata importa tanto quanto qualquer outro. O PL no momento do distrato tambem nao e relevante. A unica condicao e que o cliente seja da base ativa de Wealth Services e tenha entrado formalmente no processo de distrato [[CDV-0053]]. Esse escopo e intencionalmente mais amplo do que o da captacao liquida [[CDV-0052]], e as divergencias entre os dois numeros sao esperadas e aceitas.",
     "criteria": [
       "Servicos incluidos -> Wealth Advisor, Wealth Management e Pilot",
-      "Fee-based -> considerados independentemente de serem fee-based ou nao",
-      "Patrimonio -> considerados independentemente do PL no momento do distrato",
+      "Fee-based -> nao e criterio de inclusao neste acompanhamento",
+      "Patrimonio -> nao e criterio de inclusao neste acompanhamento",
       "Condicao -> cliente da base ativa que entrou em Em Processo de Distrato [[CDV-0053]]",
-      "Diferenca com captacao liquida -> esse escopo e mais amplo e pode divergir dos distratos que impactam a meta do consultor [[CDV-0052]]"
+      "Divergencia esperada -> esse numero sera sempre maior do que os distratos que impactam a captacao liquida [[CDV-0052]], e isso e intencional"
     ],
     "related": [
       "CDV-0039",
